@@ -12,7 +12,10 @@ class MyDocument extends Document {
             content="Detecta curto em qualquer placa eletrônica. Celulares, TVs, aparelhos de Som, porteiro eletrônico, placas inverter, enfim, qualquer placa de circuitos eletrônicos."
           />{' '}
           <meta property="og:image" content="/seo/seo_default.png" />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="627" />
           <meta property="og:type" content="website" />
+          <meta property="og:image:type" content="image/png" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link rel="manifest" href="/manifest.json" />
