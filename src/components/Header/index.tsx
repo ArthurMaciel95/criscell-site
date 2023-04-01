@@ -20,7 +20,11 @@ export const Header = () => {
             <li className="text-white font-light p-5 text-lg">Galeria</li>
             <li className="text-white font-light p-5 text-lg">Vídeos</li>
             <li>
-              <a href="https://celio8.mercadoshops.com.br/MLB-2618106233-detector-de-curtos-em-placas-electronica-_JM">
+              <a
+                href="https://celio8.mercadoshops.com.br/MLB-2618106233-detector-de-curtos-em-placas-electronica-_JM"
+                target="_blank"
+                rel="noreferrer"
+              >
                 {' '}
                 <button className="bg-gradient-to-t px-5 py-4 flex text-white font-semibold rounded-lg from-brand-green-400  to-brand-green-700 items-center">
                   Comprar Agora{' '}
