@@ -3,7 +3,7 @@ import { TitleHeader } from '../Partials/TitleHeader'
 
 export const SectionVideo = () => {
   return (
-    <section className="main_container">
+    <section className="main_container" id="video">
       <TitleHeader title=" Conheça o nosso detector de curto CrisCell" />
 
       <div className="flex items-center justify-center">

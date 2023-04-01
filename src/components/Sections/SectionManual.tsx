@@ -4,7 +4,7 @@ import { TitleHeader } from '../Partials/TitleHeader'
 export const SectionManual = () => {
   return (
     <section className="main_container text-white ">
-      <div className="my-20">
+      <div className="mb-20 mt-32 mx-5 md:mx-0">
         <TitleHeader title="Como Funciona o detector de curtos" />
         <p className="text-2xl font-bold mb-5">
           O Detector de curtos Versão 3.0 funciona da seguinte forma:
