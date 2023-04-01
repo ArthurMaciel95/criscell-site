@@ -4,18 +4,18 @@ const Analytics = () => (
   <>
     <script
       async
-      src={`https://www.googletagmanager.com/gtag/js?id=G-P9V9XQFQJ3`}
+      src={`https://www.googletagmanager.com/gtag/js?id=G-TLCBVNQWBF`}
     />
     <script
       dangerouslySetInnerHTML={{
         __html: `
-            window.dataLayer = window.dataLayer || [];
+           window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-P9V9XQFQJ3', {
+            gtag('config', 'G-TLCBVNQWBF', {
               page_path: window.location.pathname,
             });
-          `
+          `,
       }}
     />
   </>

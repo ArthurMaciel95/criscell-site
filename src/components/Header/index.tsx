@@ -25,7 +25,7 @@ export const Header = () => {
               <Link href="/#galeria">Galeria</Link>
             </li>
             <li className="text-white font-light p-5 text-lg">
-              <Link href="/#video">Vídeos</Link>
+              <Link href="/#video">Vídeo</Link>
             </li>
             <li>
               <a
