@@ -6,6 +6,7 @@ export function TextForm({
   errors,
   name,
   label,
+  value,
   required = false,
   disabled = false,
   placeholder = ' ',
@@ -17,15 +18,17 @@ export function TextForm({
   required?: boolean
   disabled?: boolean
   placeholder?: string
+  value?: string
 }) {
   return (
     <div>
-      <label htmlFor={name} className="label">
-        {label}
+      <label htmlFor={name} className="text-white/80 text-sm">
+        {label + ' ' + (required ? '*' : '')}
       </label>
       <input
         type="text"
         id={name}
+        value={value}
         placeholder={placeholder}
         style={errors[name] && { border: '1px solid red' }}
         {...register(name, {
@@ -41,3 +44,4 @@ export function TextForm({
     </div>
   )
 }
+

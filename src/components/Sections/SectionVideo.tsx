@@ -1,5 +1,6 @@
 import React from 'react'
 import { TitleHeader } from '../Partials/TitleHeader'
+import Link from 'next/link'
 
 export const SectionVideo = () => {
   return (
@@ -31,16 +32,12 @@ export const SectionVideo = () => {
       </div>
       <div className="my-20 flex justify-center">
         {' '}
-        <a
-          href="https://celio8.mercadoshops.com.br/MLB-2618106233-detector-de-curtos-em-placas-electronica-_JM"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <Link href="/product">
           <button className="bg-gradient-to-t px-9 py-7 md:w-[600px] text-4xl justify-center flex text-white font-semibold rounded-lg from-brand-green-400  to-brand-green-700 items-center">
             Comprar Agora{' '}
             <img src="/svg/bag.svg" className="h-14 ml-2" alt="" />
           </button>
-        </a>
+        </Link>
       </div>
     </section>
   )

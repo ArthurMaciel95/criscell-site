@@ -1,16 +1,17 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import Analytics from '../components/Partials/Analytics'
+import Script from 'next/script'
 
 class MyDocument extends Document {
   render() {
     return (
       <Html>
         <Head>
-          <title>CrisCell - Aparelho de curto em placas eletrônicas</title>
           <meta
             name="description"
             content="Detecta curto em qualquer placa eletrônica. Celulares, TVs, aparelhos de Som, porteiro eletrônico, placas inverter, enfim, qualquer placa de circuitos eletrônicos."
-          />{' '}
+          />
+          <title>CrisCell - Aparelho de curto em placas eletrônicas</title>
           <meta property="og:image" content="/seo/seo_default.png" />
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="627" />
@@ -26,6 +27,7 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
             rel="stylesheet"
           />
+          <Script src="https://ipayjs.infinitepay.io/production/ipay-latest.min.js" />
         </Head>
         <body>
           <Main />

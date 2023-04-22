@@ -11,14 +11,10 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>CrisCell - Aparelho de curto em placas eletrônicas</title>
-        <meta
-          name="description"
-          content="Detecta curto em qualquer placa eletrônica. Celulares, TVs, aparelhos de Som, porteiro eletrônico, placas inverter, enfim, qualquer placa de circuitos eletrônicos."
-        />
         <link rel="icon" href="/favicon.ico" />
+        <title>CrisCell - Aparelho de curto em placas eletrônicas</title>
       </Head>
-      <Header />
+
       <main>
         <SectionHero />
         <SectionVideo />

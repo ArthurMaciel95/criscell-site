@@ -1,9 +1,11 @@
 import axios from 'axios'
-
+//https://criscell-site.vercel.app/
 export const api = axios.create({
-    baseURL: 'https://api.github.com/users/',
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-    }
+  baseURL: 'http://localhost:3000',
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: 'Bearer ' + process.env.NEXT_PUBLIC_CLIENT_BEARER,
+  },
 })
+

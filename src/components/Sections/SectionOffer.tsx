@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 export const SectionOffer = () => {
@@ -20,7 +21,7 @@ export const SectionOffer = () => {
           </button>
         </a>
       </div>
-      <div className="my-20 text-center flex justify-center flex-col items-center">
+      <div className="my-20 text-center flex justify-center flex-col items-center ">
         <img src="/img/pin.png" alt="pin azul" className="w-20 mb-10" />
         <h3 className="text-white font-bold text-5xl">
           Entrega para todo o Brasil
@@ -29,17 +30,17 @@ export const SectionOffer = () => {
         <div className="mx-auto flex mt-20  max-w-[700px] items-center justify-center">
           <img src="/img/offer-1.png" alt="" />
         </div>
-        <a
-          href="https://celio8.mercadoshops.com.br/MLB-2618106233-detector-de-curtos-em-placas-electronica-_JM"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <Link href="/product">
           <button className="mt-20 bg-gradient-to-t px-9 py-7 md:w-[600px] text-4xl justify-center flex text-white font-semibold rounded-lg from-brand-green-400  to-brand-green-700 items-center">
             Comprar Agora{' '}
             <img src="/svg/bag.svg" className="h-14 ml-2" alt="" />
           </button>
-        </a>{' '}
-        <img src="/img/payment-method.png" alt="" className="my-10" />
+        </Link>{' '}
+        <img
+          src="/img/payment-method.png"
+          alt=""
+          className="my-10 primary-color-radial"
+        />
       </div>
     </section>
   )

@@ -9,12 +9,18 @@ interface SelectInputProps {
   required?: boolean
   disabled?: boolean
   options: any[]
+  value?: string
+  key?: string
+  placeholder?: string
 }
 
 export default function SelectInput(props: SelectInputProps) {
   return (
     <div>
-      <Label label={props.label} name={props.name} />
+      <label htmlFor={props.name} className="text-white">
+        {props.label}
+      </label>
+
       <select
         className="input-text"
         id={props.name}
@@ -22,9 +28,12 @@ export default function SelectInput(props: SelectInputProps) {
         disabled={props.disabled}
         {...props.register(props.name, { required: props.required })}
       >
+        <option value="" disabled={true}>
+          {props.placeholder}
+        </option>
         {props.options?.map((option, index) => (
-          <option key={index} value={option.value}>
-            {option.label}
+          <option key={index} value={option[props.value]}>
+            {option.nome}
           </option>
         ))}
       </select>
@@ -51,3 +60,4 @@ options={[
 ]}
 /> */
 }
+

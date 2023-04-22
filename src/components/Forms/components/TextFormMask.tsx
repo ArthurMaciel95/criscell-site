@@ -24,7 +24,9 @@ export function TextFormMask({
 }) {
   return (
     <div>
-      <Label label={label} name={name} />
+      <label htmlFor={name} className="text-white/80 text-sm">
+        {label}
+      </label>
       <InputMask
         mask={mask}
         type="text"
@@ -55,3 +57,4 @@ export function TextFormMask({
   required
 /> */
 }
+

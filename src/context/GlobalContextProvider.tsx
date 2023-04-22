@@ -1,26 +1,31 @@
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, createContext, useContext } from 'react'
 
 interface GlobalContextData {
-  contextWorking: string;
+  contextWorking: string
 }
 
-export const GlobalContext = createContext<GlobalContextData>({} as GlobalContextData)
+export const GlobalContext = createContext<GlobalContextData>(
+  {} as GlobalContextData
+)
 
-export function GlobalContextProvider({children}: {children: React.ReactNode}) {
-  const [contextWorking] = useState('!!!!!!!!!!!!!!!!Context is Working!');
-
+export function GlobalContextProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const [cep, setCep] = useState('')
 
   const data = {
-    contextWorking
+    cep,
+    setCep,
   }
 
   return (
-    <GlobalContext.Provider value={data}>
-      {children}
-    </GlobalContext.Provider>
+    <GlobalContext.Provider value={data}>{children}</GlobalContext.Provider>
   )
 }
 
 export const useGlobal = () => {
-  return useContext(GlobalContext);
-};
+  return useContext(GlobalContext)
+}
+
