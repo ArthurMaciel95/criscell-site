@@ -11,10 +11,10 @@ export default async function handler(req, res) {
     const { cep_origem, cep_destino, peso, altura, largura, comprimento } =
       req.body
     const me = new MelhorEnvioSdk({
-      client_id: process.env.NEXT_PUBLIC_CLIENT_ID,
-      client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
       sandbox: true,
-      bearer: process.env.NEXT_PUBLIC_CLIENT_BEARER,
+      bearer: process.env.CLIENT_BEARER,
       redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URI,
       request_scope:
         'cart-read cart-write companies-read companies-write coupons-read coupons-write notifications-read orders-read products-read products-write purchases-read shipping-calculate shipping-cancel shipping-checkout shipping-companies shipping-generate shipping-preview shipping-print shipping-share shipping-tracking ecommerce-shipping transactions-read users-read users-write webhooks-read webhooks-write',

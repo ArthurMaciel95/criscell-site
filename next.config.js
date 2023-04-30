@@ -8,6 +8,12 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV !== "development",
   },
+  env: {
+    CLIENT_SECRET: process.env.CLIENT_SECRET,
+    CLIENT_BEARER: process.env.CLIENT_BEARER,
+    CLIENT_ID: process.env.CLIENT_ID
+
+  }
 };
 
 module.exports = () => {
