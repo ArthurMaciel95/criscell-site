@@ -103,6 +103,7 @@ const FaleConosco = () => {
                     <a
                       href="https://api.whatsapp.com/send?phone=5591993743000"
                       target="_blank"
+                      rel="noreferrer"
                     >
                       (91) 99374-3000 (Whatsapp)
                     </a>
@@ -206,7 +207,7 @@ const FaleConosco = () => {
 
                 {isSubmitting ? (
                   <span className="btn h-14 text-white bg-brand-blue-500 hover:bg-brand-blue-700 rounded-none px-10 py-3">
-                    <AiOutlineLoading3Quarters className="animate-spin" />
+                    loading...
                   </span>
                 ) : (
                   <button className="btn h-14 text-white bg-brand-blue-500 hover:bg-brand-blue-700 rounded-none px-10 py-3">
