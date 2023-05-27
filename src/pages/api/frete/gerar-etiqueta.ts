@@ -8,8 +8,6 @@ export default async function handler(req, res) {
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   })
   try {
-    const { cep_origem, cep_destino, peso, altura, largura, comprimento } =
-      req.body
     const me = new MelhorEnvioSdk({
       client_id: process.env.CLIENT_ID,
       client_secret: process.env.CLIENT_SECRET,
@@ -21,44 +19,11 @@ export default async function handler(req, res) {
       state: 'BPMDruWTWzd',
     })
 
-    const result = await me.shipment.calculate({
-      from: {
-        postal_code: cep_origem as string,
-        address: 'Rua Arco-íres',
-        number: '24',
-      },
-      to: {
-        postal_code: cep_destino as string,
-        address: 'Rua Pomba Branca',
-        number: '18',
-      },
-      package: {
-        weight: peso,
-        width: largura,
-        height: altura,
-        length: comprimento,
-      },
-      options: {
-        insurance_value: 300,
-        receipt: false,
-        own_hand: false,
-        collect: false,
-      },
-    })
-    if (result.status === 200) {
-      const serializedData = result.data.map((item: any) => {
-        return {
-          name: `${item.name}`,
-          price: item.price,
-          logo_company_url: item.company.picture,
-          delivery_time: item.delivery_time,
-        }
-      })
+    const result = await me.user.orders()
 
-      return res
-        .status(200)
-        .json({ error: false, message: 'sucesso!', results: serializedData })
-    }
+    return res
+      .status(200)
+      .json({ error: false, message: 'sucesso!', results: result.data })
   } catch (error: any) {
     res.status(error.response.status).json(error.response.data)
   }

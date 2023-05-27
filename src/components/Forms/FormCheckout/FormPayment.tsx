@@ -11,7 +11,7 @@ export const FormPayment = ({ step, setStep }: { step: 1 | 2 | 3 }) => {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm()
 
   interface IState {
@@ -77,8 +77,6 @@ export const FormPayment = ({ step, setStep }: { step: 1 | 2 | 3 }) => {
 
     ipay.generate(formElement.current)
   }
-
-  console.log(watch('cidade'))
 
   return (
     <form
@@ -322,10 +320,17 @@ export const FormPayment = ({ step, setStep }: { step: 1 | 2 | 3 }) => {
               placeholder=""
             />
           </div>
-          <div className="md:cols-span-2 col-span-5 flex justify-end">
+          <div className="md:cols-span-2 col-span-5 flex justify-between">
             <button
-              className="py-3 px-6 bg-brand-green-400 text-white font-semibold text-xl rounded-lg w-full"
+              className="py-3 px-6 bg-brand-gray-50/20 text-white font-semibold text-xl rounded-lg w-fit"
+              onClick={() => setStep((step) => step - 1)}
+            >
+              Voltar
+            </button>
+            <button
+              className="py-3 px-6 bg-brand-green-400 text-white font-semibold text-xl rounded-lg w-fit"
               onClick={generateForm}
+              disabled={isSubmitting}
             >
               Realizar pagamento
             </button>

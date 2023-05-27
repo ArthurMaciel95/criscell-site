@@ -12,6 +12,7 @@ const ProductDetail = () => {
   const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([])
   const [selectedShipping, setSelectedShipping] =
     useState<ShippingOption | null>(null)
+  const VALUE_OF_PRODUCT = 450
   /* const [quantity, setQuantity] = useState(1) */
   interface ShippingOption {
     name: string
@@ -35,7 +36,7 @@ const ProductDetail = () => {
     let dataInfo = {
       cep,
       shippingInfo: selectedShipping,
-      price: Number(selectedShipping.price) + 450,
+      price: Number(selectedShipping.price) + VALUE_OF_PRODUCT,
     }
 
     localStorage.setItem('selectedShipping', JSON.stringify(dataInfo))
@@ -45,7 +46,7 @@ const ProductDetail = () => {
     try {
       setLoading(true)
       const result: RequestShippingOption = await axios.post(
-        '/api/calcular-frete',
+        '/api/frete/calcular-frete',
         {
           cep_origem: '20241266',
           cep_destino: cep,

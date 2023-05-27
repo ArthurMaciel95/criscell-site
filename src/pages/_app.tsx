@@ -7,13 +7,14 @@ import 'swiper/css/bundle'
 import '../styles/index.scss'
 import { Header } from '../components/Header'
 import { Copyright } from '../components/Footer/Copyright'
+import { Footer } from '../components/Footer'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <GlobalContextProvider>
       <Header />
       <Component {...pageProps} />
-      <Copyright />
+      <Footer />
       <BoxCookies />
       <Modals />
       <ToasterComponent />

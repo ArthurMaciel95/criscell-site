@@ -9,6 +9,8 @@ export function Copyright() {
             Sancel Eletrônica {new Date().getFullYear()} © Todos os direitos
             reservados
           </p>
+          <p className="text-white text-sm m-0">CNPJ: 30.738.750/0001-26</p>
+
           <div className="flex items-center">
             <p className="text-white flex items-center text-sm m-0">
               <a
