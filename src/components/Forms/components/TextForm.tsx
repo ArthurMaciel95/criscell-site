@@ -10,6 +10,7 @@ export function TextForm({
   required = false,
   disabled = false,
   placeholder = ' ',
+  maxLength,
 }: {
   register: any
   errors: any
@@ -19,6 +20,7 @@ export function TextForm({
   disabled?: boolean
   placeholder?: string
   value?: string
+  maxLength?: number
 }) {
   return (
     <div>
@@ -26,6 +28,7 @@ export function TextForm({
         {label + ' ' + (required ? '*' : '')}
       </label>
       <input
+        maxLength={maxLength}
         type="text"
         id={name}
         value={value}

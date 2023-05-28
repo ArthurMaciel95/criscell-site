@@ -27,16 +27,16 @@ export function DropdownNavItem({ links = [] }: DropdownNavItemProps) {
           leaveFrom="transform scale-100 opacity-100"
           leaveTo="transform scale-95 opacity-0"
         >
-          <Menu.Items className="-bottom-42 absolute right-0 flex flex-col rounded-md w-[300px] text-gray-700 border-r-4 text-4xl border-brand-blue-600 bg-white p-4 py-5 shadow">
+          <Menu.Items className="-bottom-42 absolute right-0 space-y-3 flex flex-col rounded-md w-[300px] text-gray-700 border-r-4 text-4xl border-brand-blue-600 bg-white p-4 py-5 shadow">
             {links.map((link) => (
               /* Use the `active` state to conditionally style the active item. */
               <Menu.Item
                 key={link.route}
                 as={Fragment}
-                className="py-6 px-3 text-xl"
+                className="py-6 px-3 text-xl cursor-pointer"
               >
                 <Link href={link.route}>
-                  <span>{link.name}</span>
+                  <span className="cursor-pointer">{link.name}</span>
                 </Link>
               </Menu.Item>
             ))}

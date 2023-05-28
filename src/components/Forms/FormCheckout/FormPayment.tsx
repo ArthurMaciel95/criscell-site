@@ -6,11 +6,19 @@ import { TextFormMask } from '../components/TextFormMask'
 import SelectInput from '../components/SelectInput'
 import { useFetch } from '../../../services/useFetch'
 import axios from 'axios'
-export const FormPayment = ({ step, setStep }: { step: 1 | 2 | 3 }) => {
+export const FormPayment = ({
+  step,
+  setStep,
+  cepDigited,
+}: {
+  step: 1 | 2 | 3
+}) => {
+  const [cep, setCep] = useState('')
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm()
 
@@ -34,9 +42,33 @@ export const FormPayment = ({ step, setStep }: { step: 1 | 2 | 3 }) => {
     setCepState(cepLocalStorage)
   } */
 
-  const { data: cep, error }: { data: IState; error: any } = useFetch(
-    `https://viacep.com.br/ws/${'22710255'}/json/`
-  )
+  useEffect(() => {
+    if (cepDigited) {
+      getCep(cepDigited)
+    }
+  }, [watch('cep')])
+
+  async function getCep(e: string) {
+    try {
+      const { data: cep } = await axios.get(
+        `https://viacep.com.br/ws/${e}/json/`
+      )
+      reset({
+        cep: cep.cep,
+        cidade: cep.localidade,
+        bairro: cep.bairro,
+        complemento: cep.logradouro,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  /* const { data: cep, error }: { data: IState; error: any } = useFetch(
+    `https://viacep.com.br/ws/${
+      window.localStorage.getItem('selectedShipping').cep
+    }/json/`
+  ) */
 
   async function handlePayment() {
     try {
@@ -107,29 +139,27 @@ export const FormPayment = ({ step, setStep }: { step: 1 | 2 | 3 }) => {
               placeholder="999.999.999-99"
             />
           </div>
+          <div className="md:col-span-2 col-span-5 ">
+            <TextForm
+              name="cep"
+              label="CEP"
+              errors={errors}
+              register={register}
+              disabled={false}
+              placeholder="ex: 99999-999"
+              maxLength={8}
+            />
+          </div>
           <div className="md:col-span-2 col-span-5">
             <TextForm
               name="cidade"
               label="Cidade"
               errors={errors}
-              value={cep?.localidade}
               register={register}
               disabled={false}
               placeholder="Selecione uma cidade"
             />
           </div>
-          <div className="md:col-span-3 col-span-5">
-            <TextForm
-              name="estado"
-              label="Estado"
-              errors={errors}
-              value={cep?.uf}
-              register={register}
-              disabled={false}
-              placeholder="Selecione uma estado"
-            />
-          </div>
-
           <div className="md:col-span-1 col-span-3">
             <TextForm
               name="number"
@@ -140,6 +170,17 @@ export const FormPayment = ({ step, setStep }: { step: 1 | 2 | 3 }) => {
               placeholder=""
             />
           </div>
+          <div className="md:col-span-2 col-span-5">
+            <TextForm
+              name="estado"
+              label="Estado"
+              errors={errors}
+              register={register}
+              disabled={false}
+              placeholder="Selecione uma estado"
+            />
+          </div>
+
           <div className="md:col-span-2 col-span-3">
             <TextForm
               name="complemento"
@@ -310,16 +351,7 @@ export const FormPayment = ({ step, setStep }: { step: 1 | 2 | 3 }) => {
               placeholder=""
             />
           </div>
-          <div className="md:col-span-2 col-span-3">
-            <TextForm
-              name="bairro"
-              label="Bairro"
-              errors={errors}
-              register={register}
-              disabled={false}
-              placeholder=""
-            />
-          </div>
+
           <div className="md:cols-span-2 col-span-5 flex justify-between">
             <button
               className="py-3 px-6 bg-brand-gray-50/20 text-white font-semibold text-xl rounded-lg w-fit"

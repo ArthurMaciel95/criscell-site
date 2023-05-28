@@ -7,12 +7,13 @@ import { FormPayment } from '../components/Forms/FormCheckout/FormPayment'
 import { toast } from 'react-hot-toast'
 const Checkout = () => {
   const [productValue, setProductValue] = useState(null)
+  const [cep, setCep] = useState('')
   const [step, setStep] = useState<1 | 2 | 3>(1)
   useEffect(() => {
     const productValue = !!localStorage.getItem('selectedShipping')
       ? JSON.parse(localStorage.getItem('selectedShipping'))
       : null
-
+    setCep(productValue.cep)
     if (!productValue) {
       window.location.href = '/product'
       toast.error('Selecione um produto para continuar')
@@ -22,10 +23,10 @@ const Checkout = () => {
   return (
     <PageContent>
       <section className="grid md:grid-cols-12 gap-5">
-        <div className="md:col-span-8 bg-black/50 rounded-md p-5 mt-32 md:mt-0">
+        <div className="md:col-span-8 col-span-12 bg-black/50 rounded-md p-5 mt-32 md:mt-0">
           <StepperCheckout step={step} />
           <span className="my-4 flex bg-gray-800 w-full h-[1px]"></span>
-          <FormPayment step={step} setStep={setStep} />
+          <FormPayment step={step} setStep={setStep} cepDigited={cep} />
         </div>
         <div className="md:col-span-4 col-span-12 bg-black/50 rounded-md p-5 sticky top-28 h-fit w-full">
           <InfoCheckout productValue={productValue} />
