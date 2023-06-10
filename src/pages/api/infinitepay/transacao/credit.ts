@@ -33,9 +33,8 @@ export default async function handler(req: any, res: any) {
       installments,
     } = req.body
 
-    const token =
-      'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMDA0NjIwLCJzY29wZSI6InRyYW5zYWN0aW9uIiwiZXhwIjoxNjg2NDYzNjAxfQ.wKnxEimupPKrvOvYNSjwCNEF9OsK467cDUDJ2i1CTGQ'
-    console.log(token)
+    const token = req.headers.authorization.split(' ')[1]
+
     const result = await axios.post(
       'https://api.infinitepay.io/v2/transactions',
       /* {
@@ -109,8 +108,8 @@ export default async function handler(req: any, res: any) {
             payer_ip: payer_ip,
           },
         },
-      }, */
-      {
+      }, 
+      /* {
         payment: {
           amount: 1000,
           capture_method: 'ecommerce',
@@ -119,7 +118,7 @@ export default async function handler(req: any, res: any) {
         },
         card: {
           cvv: cvv,
-          token: card_token,
+          token: payment_token,
           card_holder_name: card_holder_name,
         },
         customer: {
@@ -127,7 +126,7 @@ export default async function handler(req: any, res: any) {
           first_name: fist_name,
           last_name: last_name,
           email: email,
-          phone_number: document_number,
+          phone_number: phone_number,
           address: complement,
           complement: complement,
           city: city,
@@ -149,7 +148,7 @@ export default async function handler(req: any, res: any) {
           delivery_details: {
             email: email,
             name: card_holder_name,
-            phone_number: document_number,
+            phone_number: phone_number,
             address: {
               line1: address,
               line2: complement,
@@ -164,7 +163,7 @@ export default async function handler(req: any, res: any) {
           document_number: '01234567890',
           email: 'pagador@provider.com',
           name: card_holder_name,
-          phone_number: document_number,
+          phone_number: phone_number,
           address: {
             line1: address,
             line2: complement,
@@ -175,14 +174,14 @@ export default async function handler(req: any, res: any) {
           },
         },
         metadata: {
-          origin: 'Criscell - Detectores de curto-circuito',
+          origin: 'criscell.com.br',
           store_url: 'https://www.criscell.com.br/',
           risk: {
             session_id: fingerprint,
             payer_ip: payer_ip,
           },
         },
-      },
+      }, */
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -194,8 +193,7 @@ export default async function handler(req: any, res: any) {
       .status(200)
       .json({ error: false, message: 'sucesso!', results: result.data })
   } catch (error: any) {
-    console.log('credit', error)
-    res.status(500).json(error)
+    res.status(error.response.status).json(error.response.data.message)
   }
 }
 

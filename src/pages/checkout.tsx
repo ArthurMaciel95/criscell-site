@@ -4,18 +4,21 @@ import PageContent from '../components/Layout/PageContent'
 import { StepperCheckout } from '../components/Stepper'
 import { InfoCheckout } from '../components/Partials/InfoCheckout'
 import { FormPayment } from '../components/Forms/FormCheckout/FormPayment'
+import { useRouter } from 'next/router'
 import { toast } from 'react-hot-toast'
 const Checkout = () => {
+  const router = useRouter()
   const [productValue, setProductValue] = useState(null)
   const [cep, setCep] = useState('')
   const [step, setStep] = useState<1 | 2 | 3>(1)
   useEffect(() => {
     const productValue = !!localStorage.getItem('selectedShipping')
-      ? JSON.parse(localStorage.getItem('selectedShipping'))
+      ? JSON.parse(localStorage.getItem('selectedShipping') || [])
       : null
     setCep(productValue.cep)
     if (!productValue) {
-      window.location.href = '/product'
+      router.push('/product')
+
       toast.error('Selecione um produto para continuar')
     }
     setProductValue(productValue)

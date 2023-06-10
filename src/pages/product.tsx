@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Breadcrumb from '../components/Partials/BreadCrumb'
 import PageContent from '../components/Layout/PageContent'
 import { Icon } from '@iconify/react'
@@ -10,6 +10,7 @@ const ProductDetail = () => {
   const [cep, setCep] = useState('')
   const [loading, setLoading] = useState(false)
   const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([])
+  const [peopleWatchProductNow, setPeopleWatchProductNow] = useState(4)
   const [selectedShipping, setSelectedShipping] =
     useState<ShippingOption | null>(null)
   const VALUE_OF_PRODUCT = 450
@@ -28,6 +29,20 @@ const ProductDetail = () => {
       results: ShippingOption[]
     }
   }
+
+  function randomRange(myMin: number, myMax: number) {
+    return Math.floor(Math.random() * (myMax - myMin + 1) + myMin)
+  }
+
+  const peopleWatchNowTimer = useCallback(() => {
+    let randomNumber = randomRange(1, 6)
+    setPeopleWatchProductNow(randomNumber)
+  }, [])
+
+  useEffect(() => {
+    const timer = setInterval(peopleWatchNowTimer, 10000)
+    return () => clearInterval(timer)
+  }, [peopleWatchProductNow])
 
   function saveInfoOnLocalStorage() {
     if (!selectedShipping) return
@@ -98,10 +113,10 @@ const ProductDetail = () => {
           <div className="md:col-span-4 xl:col-span-5 mb-6 sm:mb-0">
             <SwiperProductZoom
               images={[
-                '/img/produto/p1.png',
-                '/img/produto/p2.png',
-                '/img/produto/p3.png',
-                '/img/produto/p4.png',
+                '/img/produto/aparelho-1.jpeg',
+                '/img/produto/aparelho-2.jpeg',
+                '/img/produto/aparelho-3-.png',
+                '/img/produto/aparelho-5.jpeg',
               ]}
             />
           </div>
@@ -113,7 +128,7 @@ const ProductDetail = () => {
                   Detector de Curto CrisCell (3.0)
                 </h1>
 
-                <div className="drop-shadow-lg p-4 bg-brand-blue-500 rounded-md w-fit my-5 flex ">
+                {/*  <div className="drop-shadow-lg p-4 bg-brand-blue-500 rounded-md w-fit my-5 flex ">
                   <div>
                     <h3 className="font-bold text-white text-xl">
                       25% DE DESCONTO
@@ -129,7 +144,7 @@ const ProductDetail = () => {
                       className="animate-ping"
                     />
                   </div>
-                </div>
+                </div> */}
                 <div className="flex">
                   <span className="flex items-center ">
                     <Icon
@@ -147,7 +162,7 @@ const ProductDetail = () => {
                   </span>
                 </div>
                 <div className="mt-2">
-                  <div>
+                  <div className="">
                     <h3 className="font-normal text-white/50 text-base line-through">
                       R$570,00
                     </h3>
@@ -165,15 +180,20 @@ const ProductDetail = () => {
                       <small className="text-sm font-light">/cada</small>
                       {/*  )} */}
                     </h2>
-                    {selectedShipping && (
-                      <p className="my-2 text-sm text-green-500">
-                        {selectedShipping.price &&
-                          `Frete Incluido (${new Intl.NumberFormat('pt-BR', {
-                            style: 'currency',
-                            currency: 'BRL',
-                          }).format(Number(selectedShipping.price))})`}
-                      </p>
-                    )}
+
+                    <p
+                      className={`my-2 transition-all text-sm text-green-500 ${
+                        selectedShipping
+                          ? 'translate-x-0 opacity-100'
+                          : '-translate-x-4 opacity-0'
+                      }`}
+                    >
+                      {selectedShipping?.price &&
+                        `Frete Incluido (${new Intl.NumberFormat('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        }).format(Number(selectedShipping.price))})`}
+                    </p>
                   </div>
 
                   <h4 className="font-semibold text-xl text-gray-300 mb-4">
@@ -184,6 +204,19 @@ const ProductDetail = () => {
                     curto em qualquer placa eletrônica. Celulares, TVs,
                     aparelhos de Som, porteiro eletrônico, placas inverter,
                     enfim, qualquer placa de circuitos eletrônicos.
+                  </p>
+                  <p className="my-4 flex items-center animate-pulse from-brand-green-400  to-brand-green-700   bg-gradient-to-t w-fit p-2 rounded-md shadow-xl">
+                    <Icon
+                      icon="pepicons-pop:eye"
+                      color="white"
+                      fontSize={28}
+                      className="mr-2"
+                    />
+
+                    <strong className="mr-1">
+                      {peopleWatchProductNow} Pessoa(s) estão visualizando esse
+                      produto!
+                    </strong>
                   </p>
                 </div>
               </div>
@@ -199,7 +232,7 @@ const ProductDetail = () => {
                       shippingOptions.length === 0
                     }
                     onClick={() => saveInfoOnLocalStorage()}
-                    className="disabled:from-gray-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all disabled:to-brand-gray-50 bg-gradient-to-t px-5 py-4 flex text-white font-semibold rounded-lg from-brand-green-400  to-brand-green-700 items-center"
+                    className="disabled:from-gray-600 duration-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all disabled:to-brand-gray-50 bg-gradient-to-t px-5 py-4 flex text-white font-semibold rounded-lg from-brand-green-400  to-brand-green-700 items-center"
                   >
                     Comprar Agora
                     <img src="/svg/bag.svg" className="h-7 ml-2" alt="" />
@@ -228,11 +261,27 @@ const ProductDetail = () => {
                   </button>
                 </div> */}
               </div>
-              {!selectedShipping && (
-                <small className="text-red-500">
+
+              <div className="flex flex-col">
+                <small
+                  className={`text-red-500 transition-all duration-500 ${
+                    !selectedShipping
+                      ? 'opacity-100 translate-x-0'
+                      : '-translate-x-4 opacity-0'
+                  }`}
+                >
                   Selecione o frete para seguir com a Compra.
                 </small>
-              )}
+                <small
+                  className={`text-green-500 transition-all duration-500 ${
+                    selectedShipping
+                      ? 'opacity-100 translate-x-0'
+                      : '-translate-x-4 opacity-0'
+                  }`}
+                >
+                  Tudo pronto para seguir com a compra!.
+                </small>
+              </div>
             </div>
             <div className="flex flex-col">
               <small className="text-white">

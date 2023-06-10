@@ -40,3 +40,11 @@ body {
   background-position: center center;
 }
 
+.gradient-footer {
+  background: radial-gradient(
+    circle,
+    rgba(8, 29, 55, 0.638) 44%,
+    rgb(18, 23, 39) 100%
+  );
+}
+

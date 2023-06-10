@@ -7,7 +7,10 @@ export default function SwiperProductZoom({ images }) {
   return (
     <div className="grid grid-cols-12 md:grid-cols-1 gap-4">
       <div className="col-span-9 md:col-span-1 aspect-square">
-        <img src={activeImage} className="h-full w-full object-cover" />
+        <img
+          src={activeImage}
+          className="h-full w-full object-contain bg-black"
+        />
       </div>
       <div className="col-span-3 md:col-span-1">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-2">

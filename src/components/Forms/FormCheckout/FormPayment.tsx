@@ -90,29 +90,27 @@ export const FormPayment = ({
   }, [])
 
   useEffect(() => {
-    if (cepDigited) {
+    if (cepDigited && step === 1) {
       getCep(cepDigited)
     }
-  }, [watch('cep')])
+  }, [step])
 
   async function getCep(e: string) {
     try {
       const { data: cep } = await axios.get(
         `https://viacep.com.br/ws/${e}/json/`
       )
+
+      form.zip = cep.cep
+      form.city = cep.localidade
+      form.address = cep.bairro
+      form.complement = cep.logradouro
       reset({
         cep: cep.cep,
         cidade: cep.localidade,
         bairro: cep.bairro,
         complemento: cep.logradouro,
       })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  async function handlePayment() {
-    try {
     } catch (error) {
       console.log(error)
     }
@@ -133,7 +131,12 @@ export const FormPayment = ({
   async function getAccessTokenTransation() {
     try {
       const response = await axios.get(
-        '/api/infinitepay/get-access-token?scope=transaction'
+        '/api/infinitepay/get-access-token?scope=transaction',
+        {
+          headers: {
+            Authorization: `Bearer ${accessTokenIpay}`,
+          },
+        }
       )
 
       setAccessTokenTransation(response.data.results.access_token)
@@ -198,7 +201,7 @@ export const FormPayment = ({
   }
 
   async function postTransaction() {
-    console.log(formElement)
+    const id = toast.loading('Processando pagamento...')
     await getAccessTokenTransation()
     const payer_ip = await getIp()
     const formPayment = document.forms[0]
@@ -212,7 +215,7 @@ export const FormPayment = ({
 
       email: form.email,
       phone_number: form.phone_number,
-      address: form.address,
+      address: form.address + ' ' + form.number,
       complement: form.complement,
       city: form.city,
       state: form.state,
@@ -237,15 +240,15 @@ export const FormPayment = ({
           },
         }
       )
-      console.log(response)
 
-      toast.success('Pagamento realizado com sucesso')
-
+      toast.remove(id)
+      toast.success('Pagamento realizado com sucesso!')
       setLoading(false)
     } catch (error) {
       setLoading(false)
+      toast.remove(id)
 
-      toast.error(`${error}`)
+      toast.error(error.response.statusText)
       console.log(error)
     }
     setLoading(false)
@@ -373,7 +376,16 @@ export const FormPayment = ({
             <button
               className="py-3 px-6 bg-brand-green-400 text-white font-semibold text-xl rounded-lg disabled:bg-brand-gray-50 disabled:cursor-not-allowed"
               onClick={() => setStep((step) => step + 1)}
-              disabled={false}
+              disabled={
+                form.zip === '' ||
+                form.city === '' ||
+                form.state === '' ||
+                form.address === '' ||
+                form.number === '' ||
+                form.complement === '' ||
+                form.email === '' ||
+                form.phone_number === ''
+              }
             >
               Avançar
             </button>

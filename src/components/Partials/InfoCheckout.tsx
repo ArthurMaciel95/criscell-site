@@ -37,6 +37,15 @@ export const InfoCheckout = ({ productValue }: { productValue: any }) => {
             currency: 'BRL',
           }).format(productValue?.shippingInfo.price ?? 0)}
         </span>
+        <img
+          src={productValue?.shippingInfo.logo_company_url}
+          alt=""
+          className="w-24 my-2 bg-white p-2 rounded-md"
+        />
+        <p className=" text-white/70">
+          Prazo de entrega:{' '}
+          <strong>{productValue?.shippingInfo.delivery_time} dias</strong>
+        </p>
       </p>
       <span className="bg-white/10 w-full h-[1px] flex my-4"></span>
       <div className="p-4 bg-brand-green-400 rounded-md">
