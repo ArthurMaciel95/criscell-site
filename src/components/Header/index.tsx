@@ -8,7 +8,7 @@ export const Header = () => {
   return (
     <header className="backdrop-blur h-auto bg-black/50 p-4  z-[999] flex  top-0 fixed w-full">
       <nav className="main_container flex justify-between items-center ">
-        <div>
+        <div className="cursor-pointer">
           <Link href="/">
             <img src="/img/logo.png" alt="" />
           </Link>

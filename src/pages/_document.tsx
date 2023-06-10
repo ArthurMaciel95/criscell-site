@@ -27,7 +27,22 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
             rel="stylesheet"
           />
-          <Script src="https://ipayjs.infinitepay.io/production/ipay-latest.min.js" />
+          <Script
+            src="https://ipayjs.infinitepay.io/production/ipay-latest.min.js"
+            strategy="lazyOnload"
+            onLoad={() => {
+              ;(function (window, document) {
+                if (!!window['IPay']) return
+
+                var head = document.getElementsByTagName('head')[0]
+                var script = document.createElement('script')
+                script.async = 1
+                script.src =
+                  'https://ipayjs.infinitepay.io/production/ipay-latest.min.js'
+                head.parentNode.appendChild(script)
+              })(window, document)
+            }}
+          />
         </Head>
         <body>
           <Main />

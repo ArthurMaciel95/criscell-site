@@ -45,7 +45,7 @@ export default async function handler(req, res) {
         collect: false,
       },
     })
-    console.log(result)
+
     if (result.status === 200) {
       const serializedData = result.data.map((item: any) => {
         return {

@@ -4,6 +4,7 @@ import { Label } from './Label'
 import { LabelError } from './LabelError'
 
 export function TextFormMask({
+  dataId,
   register,
   errors,
   name,
@@ -21,6 +22,7 @@ export function TextFormMask({
   mask: string
   disabled?: boolean
   placeholder?: string
+  dataId?: string
 }) {
   return (
     <div>
