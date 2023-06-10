@@ -48,9 +48,9 @@ export const InfoCheckout = ({ productValue }: { productValue: any }) => {
         </p>
       </p>
       <span className="bg-white/10 w-full h-[1px] flex my-4"></span>
-      <div className="p-4 bg-brand-green-400 rounded-md">
-        <h2>
-          <strong>TOTAL: </strong>
+      <div className="p-4 bg-gray-800 rounded-md pointer-events-none select-none">
+        <h2 className="flex items-center">
+          <strong className="text-xl mr-4">TOTAL: </strong>
           <strong className="font-bold text-white">
             {new Intl.NumberFormat('pt-BR', {
               style: 'currency',

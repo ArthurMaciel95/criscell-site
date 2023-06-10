@@ -26,7 +26,7 @@ export const SectionOffer = () => {
         <h3 className="text-white font-bold text-5xl">
           Entrega para todo o Brasil
         </h3>
-        <img src="/img/produto1.png" alt="" className="mt-20" />{' '}
+        <img src="/img/produto/aparelho-3-.png" alt="" className="mt-20" />{' '}
         <div className="mx-auto flex mt-20  max-w-[700px] items-center justify-center">
           <img src="/img/offer-1.png" alt="" />
         </div>

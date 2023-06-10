@@ -111,7 +111,7 @@ export default async function handler(req: any, res: any) {
       }, */
       {
         payment: {
-          amount: 1000,
+          amount: 100,
           capture_method: 'ecommerce',
           payment_method: 'credit',
           installments: installments,
@@ -131,18 +131,18 @@ export default async function handler(req: any, res: any) {
           complement: complement,
           city: city,
           state: state,
-          country: 'BR',
+          country: country,
           zip: zip,
         },
         order: {
           id: 'pedido-1234',
-          amount: 1000,
+          amount: 100,
           items: [
             {
               id: 'item1',
               description: 'Item1',
               quantity: 2,
-              amount: 500,
+              amount: 100,
             },
           ],
           delivery_details: {
@@ -154,7 +154,7 @@ export default async function handler(req: any, res: any) {
               line2: complement,
               city: city,
               state: state,
-              country: 'BR',
+              country: country,
               zip: zip,
             },
           },
@@ -169,7 +169,7 @@ export default async function handler(req: any, res: any) {
             line2: complement,
             city: city,
             state: state,
-            country: 'BR',
+            country: country,
             zip: zip,
           },
         },
