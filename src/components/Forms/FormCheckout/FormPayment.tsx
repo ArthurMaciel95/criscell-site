@@ -500,19 +500,6 @@ export const FormPayment = ({
               />
             </div>
           </div>
-
-          <div className="md:col-span-3 col-span-5 flex flex-col text-white">
-            <label>Número do Cartão</label>
-            <input
-              type="text"
-              data-ip="card-number"
-              name="card_number"
-              placeholder=" "
-              className="mask-number-card input-text"
-              value="5502098506232160"
-              onChange={handleForm}
-            />
-          </div>
           <div className="md:col-span-2 col-span-5">
             <div className="text-white flex flex-col">
               <label>CVV</label>
@@ -524,8 +511,21 @@ export const FormPayment = ({
                 className="mask-cvv text-black input-text"
                 onChange={handleForm}
                 value={form.card_cvv}
+                maxLength={3}
               />
             </div>
+          </div>
+          <div className="md:col-span-3 col-span-5 flex flex-col text-white">
+            <label>Número do Cartão</label>
+            <input
+              type="text"
+              data-ip="card-number"
+              name="card_number"
+              placeholder=" "
+              className="mask-number-card input-text"
+              value={form.card_number}
+              onChange={handleForm}
+            />
           </div>
 
           <div className="md:col-span-2 col-span-3">

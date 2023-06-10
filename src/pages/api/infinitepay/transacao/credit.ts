@@ -108,8 +108,8 @@ export default async function handler(req: any, res: any) {
             payer_ip: payer_ip,
           },
         },
-      }, 
-      /* {
+      }, */
+      {
         payment: {
           amount: 1000,
           capture_method: 'ecommerce',
@@ -160,8 +160,8 @@ export default async function handler(req: any, res: any) {
           },
         },
         billing_details: {
-          document_number: '01234567890',
-          email: 'pagador@provider.com',
+          document_number: document_number,
+          email: email,
           name: card_holder_name,
           phone_number: phone_number,
           address: {
@@ -181,7 +181,7 @@ export default async function handler(req: any, res: any) {
             payer_ip: payer_ip,
           },
         },
-      }, */
+      },
       {
         headers: {
           Authorization: `Bearer ${token}`,
