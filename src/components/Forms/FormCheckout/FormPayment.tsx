@@ -93,18 +93,19 @@ export const FormPayment = ({
     if (cepDigited && step === 1) {
       getCep(cepDigited)
     }
-  }, [step])
+  }, [step, cepDigited])
 
   async function getCep(e: string) {
     try {
       const { data: cep } = await axios.get(
         `https://viacep.com.br/ws/${e}/json/`
       )
-
+      console.log(cep)
       form.zip = cep.cep
       form.city = cep.localidade
       form.address = cep.bairro
       form.complement = cep.logradouro
+      form.state = cep.uf
       reset({
         cep: cep.cep,
         cidade: cep.localidade,
@@ -372,6 +373,20 @@ export const FormPayment = ({
               value={form.phone_number}
             />
           </div>
+          <div className="md:col-span-2 col-span-5 ">
+            <div className="flex flex-col text-white">
+              <label>CPF do titular</label>
+              <input
+                type="text"
+                data-ip="card-holder-document"
+                name="cardholder_cpf"
+                placeholder=" "
+                className="mask-cpf input-text"
+                onChange={handleForm}
+                value={form.cardholder_cpf}
+              />
+            </div>
+          </div>
           <div className="md:cols-span-2 col-span-5 flex justify-end">
             <button
               className="py-3 px-6 bg-brand-green-400 text-white font-semibold text-xl rounded-lg disabled:bg-brand-gray-50 disabled:cursor-not-allowed"
@@ -485,20 +500,7 @@ export const FormPayment = ({
               />
             </div>
           </div>
-          <div className="md:col-span-2 col-span-5 ">
-            <div className="flex flex-col text-white">
-              <label>CPF do titular</label>
-              <input
-                type="text"
-                data-ip="card-holder-document"
-                name="cardholder_cpf"
-                placeholder=" "
-                className="mask-cpf input-text"
-                onChange={handleForm}
-                value={form.cardholder_cpf}
-              />
-            </div>
-          </div>
+
           <div className="md:col-span-3 col-span-5 flex flex-col text-white">
             <label>Número do Cartão</label>
             <input

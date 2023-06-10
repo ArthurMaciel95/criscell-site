@@ -6,9 +6,9 @@ export const InfoCheckout = ({ productValue }: { productValue: any }) => {
       <h4 className="text-white font-bold mb-2">RESUMO</h4>
       <div className="flex my-5">
         <img
-          src="/img/produto/p1.png"
+          src="/img/produto/aparelho-5-.png"
           alt=""
-          className="aspect-square rounded-md h-[100px] "
+          className="aspect-square rounded-md object-contain h-[110px] bg-white"
         />
         <div className="ml-3">
           <p className="text-white/70 mb-2">
