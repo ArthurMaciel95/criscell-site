@@ -176,6 +176,8 @@ export const FormPayment = ({
   }
 
   async function generateForm() {
+    setLoading(true)
+
     await cardTokenization()
     var ipay = new IPay({ access_token: accessTokenIpay })
     console.log(ipay)
@@ -196,34 +198,38 @@ export const FormPayment = ({
   }
 
   async function postTransaction() {
-    setLoading(true)
     console.log(formElement)
     await getAccessTokenTransation()
     const payer_ip = await getIp()
+    const formPayment = document.forms[0]
+
+    const payload = {
+      amount: 10,
+      payment_token: paymentToken,
+      cvv: form.card_cvv,
+      card_holder_name: form.cardholder_name,
+      document_number: form.cardholder_cpf,
+
+      email: form.email,
+      phone_number: form.phone_number,
+      address: form.address,
+      complement: form.complement,
+      city: form.city,
+      state: form.state,
+      country: 'BR',
+      zip: form.zip,
+      payer_ip: payer_ip.ip,
+      card_token: formPayment.querySelector('input[name="ip[token]"]').value,
+      fingerprint: formPayment.querySelector('input[name="ip[session_id]"]')
+        .value,
+      installments: form.installments,
+    }
+    console.log(payload)
 
     try {
       const response = await axios.post(
         `/api/infinitepay/transacao/credit`,
-        {
-          amount: 10,
-          payment_token: paymentToken,
-          cvv: form.card_cvv,
-          card_holder_name: form.cardholder_name,
-          document_number: form.cardholder_cpf,
-
-          email: form.email,
-          phone_number: form.phone_number,
-          address: form.address,
-          complement: form.complement,
-          city: form.city,
-          state: form.state,
-          country: 'BR',
-          zip: form.zip,
-          payer_ip: payer_ip.ip,
-          card_token: formElement.current.elements['ip[token]'].value,
-          fingerprint: formElement.current.elements['ip[session-id]'].value,
-          installments: form.installments,
-        },
+        payload,
         {
           method: 'POST',
           headers: {
@@ -248,34 +254,14 @@ export const FormPayment = ({
   return (
     <form
       action="#"
-      onSubmit={handleSubmit(handlePayment)}
+      onSubmit={handleSubmit(generateForm)}
       className="mt-5 gap-4"
       data-ip="form"
       ref={formElement}
+      id="credit-card-form"
     >
       {step === 1 && (
         <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
-          {/*  <div className="md:col-span-3 col-span-5">
-      <TextForm
-        name="name"
-        label="Nome"
-        errors={errors}
-        register={register}
-        disabled={false}
-        placeholder="ex: João da Silva"
-      />
-    </div> */}
-          {/* <div className="md:col-span-2 col-span-5 ">
-      <TextFormMask
-        name="cpf"
-        label="CPF"
-        mask="999.999.999-99"
-        errors={errors}
-        register={register}
-        disabled={false}
-        placeholder="999.999.999-99"
-      />
-    </div> */}
           <div className="md:col-span-2 col-span-5  text-white">
             <label>CEP *</label>
             <input
@@ -291,21 +277,7 @@ export const FormPayment = ({
           </div>
           <div className="md:col-span-2 col-span-5 text-white">
             <label>Cidade *</label>
-            {/* <input
-              list="mycities"
-              id="city"
-              name="city"
-              type="text"
-              data-ip="city"
-              className="input-text"
-              autoComplete="true"
-              min={5}
-            />
-            <datalist id="mycities">
-              {cities.map((city) => (
-                <option value={city.name}></option>
-              ))}
-            </datalist> */}
+
             <input
               data-ip="city"
               name="city"
@@ -597,11 +569,19 @@ export const FormPayment = ({
               Voltar
             </button>
             <button
-              className="py-3 px-6 bg-brand-green-400 text-white font-semibold text-xl rounded-lg w-fit"
-              onClick={generateForm}
+              className="py-3 min-w-[228px] flex items-center justify-center px-6 bg-brand-green-400 text-white font-semibold text-xl rounded-lg w-fit"
+              type="submit"
               disabled={isSubmitting}
             >
-              {loading ? 'carregando' : 'Realizar pagamento'}
+              {loading ? (
+                <Icon
+                  icon="eos-icons:bubble-loading"
+                  color="white"
+                  fontSize={28}
+                />
+              ) : (
+                'Realizar pagamento'
+              )}
             </button>
           </div>
         </div>

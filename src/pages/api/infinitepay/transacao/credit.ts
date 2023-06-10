@@ -33,8 +33,9 @@ export default async function handler(req: any, res: any) {
       installments,
     } = req.body
 
-    const token = req.headers.authorization.split(' ')[1]
-
+    const token =
+      'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMDA0NjIwLCJzY29wZSI6InRyYW5zYWN0aW9uIiwiZXhwIjoxNjg2NDYzNjAxfQ.wKnxEimupPKrvOvYNSjwCNEF9OsK467cDUDJ2i1CTGQ'
+    console.log(token)
     const result = await axios.post(
       'https://api.infinitepay.io/v2/transactions',
       /* {
