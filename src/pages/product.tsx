@@ -246,6 +246,7 @@ const ProductDetail = () => {
                   className="px-4 mt-2 py-4 rounded-md max-w-[300px] text-lg bg-white/10 text-gray-300 font-normal"
                   onChange={(e) => setCep(e.target.value)}
                   value={cep}
+                  maxLength={8}
                 />
                 <button
                   disabled={cep.length < 8}

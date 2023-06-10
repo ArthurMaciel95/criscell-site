@@ -12,6 +12,26 @@ import { getIp } from '../../../helpers/getIp'
 import { AddressForm } from './AddressForm'
 import { PaymentMethodForm } from './PaymentMethodForm'
 import { CreditCardForm } from './CreditCardForm'
+import { state } from '../../../helpers/states'
+/* import { cities } from '../../../helpers/cities' */
+
+interface IForm {
+  zip: string
+  city: string
+  number: string
+  state: string
+  complement: string
+  address: string
+  email: string
+  phone_number: string
+  cardholder_name: string
+  cardholder_cpf: string
+  card_number: string
+  card_cvv: string
+  card_expiration_month: string
+  card_expiration_year: string
+  installments: number
+}
 export const FormPayment = ({
   step,
   setStep,
@@ -26,6 +46,23 @@ export const FormPayment = ({
   const formElement = useRef(null)
   const [paymentMethod, setPaymentMethod] = useState('')
   const [loading, setLoading] = useState(false)
+  const [form, setForm] = useState<IForm>({
+    zip: '',
+    city: '',
+    number: '',
+    state: '',
+    complement: '',
+    address: '',
+    email: '',
+    phone_number: '',
+    cardholder_name: '',
+    cardholder_cpf: '',
+    card_number: '',
+    card_cvv: '',
+    card_expiration_month: '',
+    card_expiration_year: '',
+    installments: 1,
+  })
   const {
     register,
     getValues,
@@ -131,18 +168,25 @@ export const FormPayment = ({
     }
   }
 
+  function handleForm(e: any) {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    })
+  }
+
   async function generateForm() {
     await cardTokenization()
     var ipay = new IPay({ access_token: accessTokenIpay })
-
+    console.log(ipay)
     ipay.listeners = {
       'result:success': function () {
         postTransaction()
       },
       'result:error': function (error: any) {
-        /*     alert(
+        alert(
           'Ocorreu um erro ao finalizar sua transação, tente novamente, se o erro persistir entre em contato com o suporte'
-        ) */
+        )
         toast.error(error.message)
         console.log(error) // erro da tokenização, mostra no console
       },
@@ -153,10 +197,9 @@ export const FormPayment = ({
 
   async function postTransaction() {
     setLoading(true)
+    console.log(formElement)
     await getAccessTokenTransation()
     const payer_ip = await getIp()
-
-    console.log(formElement)
 
     try {
       const response = await axios.post(
@@ -164,23 +207,22 @@ export const FormPayment = ({
         {
           amount: 10,
           payment_token: paymentToken,
-          cvv: '352',
-          card_holder_name: 'ARTHUR NOGUEIRA MACIEL ROCHA',
-          document_number: '15931601783',
-          fist_name: 'Arthur',
-          last_name: 'Rocha',
-          email: 'arthurnmrocha@gmail.com',
-          phone_number: '11955551111',
-          address: 'Rua 1',
-          complement: 'taquara, perto do portão amarelo',
-          city: 'Rio de Janeiro',
-          state: 'RJ',
+          cvv: form.card_cvv,
+          card_holder_name: form.cardholder_name,
+          document_number: form.cardholder_cpf,
+
+          email: form.email,
+          phone_number: form.phone_number,
+          address: form.address,
+          complement: form.complement,
+          city: form.city,
+          state: form.state,
           country: 'BR',
-          zip: '22710255',
+          zip: form.zip,
           payer_ip: payer_ip.ip,
-          /* card_token: formElement.current.elements['ip[token]'].value, */
-          fingerprint: formElement.current.elements['ip[session_id]'].value,
-          parcelas: 1,
+          card_token: formElement.current.elements['ip[token]'].value,
+          fingerprint: formElement.current.elements['ip[session-id]'].value,
+          installments: form.installments,
         },
         {
           method: 'POST',
@@ -190,6 +232,7 @@ export const FormPayment = ({
         }
       )
       console.log(response)
+
       toast.success('Pagamento realizado com sucesso')
 
       setLoading(false)
@@ -236,22 +279,41 @@ export const FormPayment = ({
           <div className="md:col-span-2 col-span-5  text-white">
             <label>CEP *</label>
             <input
-              name="cep"
+              name="zip"
               type="text"
               className="input-text"
-              data-ip="cep"
+              data-ip="zip"
               placeholder="ex: 99999-999"
               maxLength={8}
+              value={form.zip}
+              onChange={handleForm}
             />
           </div>
           <div className="md:col-span-2 col-span-5 text-white">
             <label>Cidade *</label>
+            {/* <input
+              list="mycities"
+              id="city"
+              name="city"
+              type="text"
+              data-ip="city"
+              className="input-text"
+              autoComplete="true"
+              min={5}
+            />
+            <datalist id="mycities">
+              {cities.map((city) => (
+                <option value={city.name}></option>
+              ))}
+            </datalist> */}
             <input
-              data-ip="cidade"
-              name="cidade"
+              data-ip="city"
+              name="city"
               type="text"
               placeholder="Selecione uma cidade"
               className="input-text"
+              onChange={handleForm}
+              value={form.city}
             />
           </div>
           <div className="md:col-span-1 col-span-3 text-white">
@@ -262,36 +324,53 @@ export const FormPayment = ({
               type="text"
               placeholder=""
               className="input-text"
+              onChange={handleForm}
+              value={form.number}
             />
           </div>
           <div className="md:col-span-2 col-span-5 text-white">
             <label>Estado *</label>
-            <input
-              data-ip="estado"
-              name="estado"
+            <select
+              name="state"
+              data-ip="state"
+              className="input-text"
+              onChange={handleForm}
+              value={form.state}
+            >
+              {state.map((state) => (
+                <option value={state.sigla}>{state.sigla}</option>
+              ))}
+            </select>
+            {/*             <input
+              data-ip="state"
+              name="state"
               type="text"
               placeholder="Selecione uma estado"
               className="input-text"
-            />
+            /> */}
           </div>
 
           <div className="md:col-span-3 col-span-3 text-white">
             <label>Complemento *</label>
             <input
-              name="complemento"
-              data-ip="complemento"
+              name="complement"
+              data-ip="complement"
               type="text"
               className="input-text"
+              onChange={handleForm}
+              value={form.complement}
             />
           </div>
           <div className="md:col-span-3 col-span-3 text-white">
             <label>Bairro *</label>
             <input
-              name="bairro"
+              name="address"
               type="text"
-              data-ip="bairro"
+              data-ip="address"
               className="input-text"
               placeholder="ex: Centro"
+              onChange={handleForm}
+              value={form.address}
             />
           </div>
           <div className="md:col-span-2 col-span-3 text-white">
@@ -301,6 +380,8 @@ export const FormPayment = ({
               data-ip="email"
               type="text"
               className="input-text"
+              onChange={handleForm}
+              value={form.email}
             />
           </div>
           <div className="md:col-span-2 col-span-3 text-white">
@@ -310,6 +391,8 @@ export const FormPayment = ({
               data-ip="phone_number"
               type="text"
               className="input-text"
+              onChange={handleForm}
+              value={form.phone_number}
             />
           </div>
           <div className="md:cols-span-2 col-span-5 flex justify-end">
@@ -403,16 +486,6 @@ export const FormPayment = ({
             className="hidden"
           />
           <div className="md:col-span-3 col-span-5">
-            {/*  <TextForm
-          data-ip="card-holder-name"
-          name="cardholder_name"
-          label="Nome completo do titular"
-          errors={errors}
-          register={register}
-          disabled={false}
-          required={true}
-          placeholder="ex: João da Silva"
-        /> */}
             <div className="flex flex-col text-white">
               <label>Nome completo do titular</label>
               <input
@@ -421,6 +494,8 @@ export const FormPayment = ({
                 name="cardholder_name"
                 className="input-text"
                 placeholder=" "
+                onChange={handleForm}
+                value={form.cardholder_name}
               />
             </div>
           </div>
@@ -433,41 +508,22 @@ export const FormPayment = ({
                 name="cardholder_cpf"
                 placeholder=" "
                 className="mask-cpf input-text"
+                onChange={handleForm}
+                value={form.cardholder_cpf}
               />
             </div>
-            {/*  <TextFormMask
-          data-ip="card-holder-document"
-          name="cardholder_cpf"
-          label="CPF do titular"
-          mask="999.999.999-99"
-          errors={errors}
-          register={register}
-          disabled={false}
-          required={true}
-          placeholder="999.999.999-99"
-        /> */}
           </div>
           <div className="md:col-span-3 col-span-5 flex flex-col text-white">
             <label>Número do Cartão</label>
             <input
               type="text"
               data-ip="card-number"
-              name="number"
+              name="card_number"
               placeholder=" "
               className="mask-number-card input-text"
               value="5502098506232160"
+              onChange={handleForm}
             />
-
-            {/* <TextForm
-          data-ip="card-number"
-          name="number"
-          label="Número do cartão"
-          errors={errors}
-          register={register}
-          disabled={false}
-          required={true}
-          placeholder="ex: 5256 6325 4015 6687"
-        /> */}
           </div>
           <div className="md:col-span-2 col-span-5">
             <div className="text-white flex flex-col">
@@ -475,21 +531,13 @@ export const FormPayment = ({
               <input
                 type="text"
                 data-ip="card-cvv"
-                name="cvv"
+                name="card_cvv"
                 placeholder=" "
                 className="mask-cvv text-black input-text"
+                onChange={handleForm}
+                value={form.card_cvv}
               />
             </div>
-            {/*   <TextForm
-          data-ip="card-cvv"
-          name="cvv"
-          label="CVV"
-          errors={errors}
-          register={register}
-          disabled={false}
-          required={true}
-          placeholder=" ex: 398"
-        /> */}
           </div>
 
           <div className="md:col-span-2 col-span-3">
@@ -498,23 +546,14 @@ export const FormPayment = ({
               <input
                 type="text"
                 data-ip="card-expiration-month"
-                name="expiration_month"
+                name="card_expiration_month"
                 placeholder=" "
                 className="mask-mes text-black input-text"
-                value={'01'}
+                onChange={handleForm}
+                value={form.card_expiration_month}
                 maxLength={2}
               />
             </div>
-            {/*  <TextForm
-          data-ip="card-expiration-month"
-          name="expiration_month"
-          label="Mês de expiração"
-          errors={errors}
-          register={register}
-          disabled={false}
-          required={true}
-          placeholder=""
-        /> */}
           </div>
           <div className="md:col-span-2 col-span-3">
             <div className="text-white flex flex-col">
@@ -522,25 +561,34 @@ export const FormPayment = ({
               <input
                 type="text"
                 data-ip="card-expiration-year"
-                name="expiration_year"
+                name="card_expiration_year"
                 placeholder=" "
                 className="mask-ano input-text"
-                value={'25'}
                 maxLength={2}
+                onChange={handleForm}
+                value={form.card_expiration_year}
               />
             </div>
-            {/*   <TextForm
-          data-ip="card-expiration-year"
-          name="expiration_year"
-          label="Ano de expiração"
-          errors={errors}
-          register={register}
-          disabled={false}
-          required={true}
-          placeholder=""
-        /> */}
           </div>
-
+          <div className="md:col-span-1 col-span-3">
+            <div className="text-white flex flex-col">
+              <label htmlFor="parcelas">Parcelas</label>
+              <select
+                name="installments"
+                id="installments"
+                className="input-text"
+                onChange={handleForm}
+                value={form.installments}
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>
+            </div>
+          </div>
           <div className="md:cols-span-2 col-span-5 flex justify-between">
             <button
               className="py-3 px-6 bg-brand-gray-50/20 text-white font-semibold text-xl rounded-lg w-fit"

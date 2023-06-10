@@ -29,6 +29,8 @@ export default async function handler(req: any, res: any) {
       country,
       zip,
       payer_ip, //
+      card_token,
+      installments,
     } = req.body
 
     const token = req.headers.authorization.split(' ')[1]
@@ -112,10 +114,11 @@ export default async function handler(req: any, res: any) {
           amount: 1000,
           capture_method: 'ecommerce',
           payment_method: 'credit',
+          installments: installments,
         },
         card: {
           cvv: cvv,
-          token: payment_token,
+          token: card_token,
           card_holder_name: card_holder_name,
         },
         customer: {
@@ -143,12 +146,12 @@ export default async function handler(req: any, res: any) {
             },
           ],
           delivery_details: {
-            email: 'arthurnmrocha@gmail.com',
-            name: 'Arthur Nogueira Maciel Rocha',
+            email: email,
+            name: card_holder_name,
             phone_number: document_number,
             address: {
-              line1: 'Rua da Pracinha, 1234',
-              line2: 'Sala 2',
+              line1: address,
+              line2: complement,
               city: city,
               state: state,
               country: 'BR',
@@ -159,11 +162,11 @@ export default async function handler(req: any, res: any) {
         billing_details: {
           document_number: '01234567890',
           email: 'pagador@provider.com',
-          name: 'Nome Completo do Pagador',
+          name: card_holder_name,
           phone_number: document_number,
           address: {
-            line1: 'Rua da Pracinha, 1234',
-            line2: 'Sala 2',
+            line1: address,
+            line2: complement,
             city: city,
             state: state,
             country: 'BR',
@@ -171,7 +174,7 @@ export default async function handler(req: any, res: any) {
           },
         },
         metadata: {
-          origin: 'ecommerce',
+          origin: 'Criscell - Detectores de curto-circuito',
           store_url: 'https://www.criscell.com.br/',
           risk: {
             session_id: fingerprint,
