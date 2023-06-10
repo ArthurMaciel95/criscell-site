@@ -310,7 +310,9 @@ export const FormPayment = ({
               value={form.state}
             >
               {state.map((state) => (
-                <option value={state.sigla}>{state.sigla}</option>
+                <option key={state.sigla} value={state.sigla}>
+                  {state.sigla}
+                </option>
               ))}
             </select>
             {/*             <input
