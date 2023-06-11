@@ -574,6 +574,7 @@ export const FormPayment = ({
               >
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
                   <option
+                    key={item}
                     className="text-base"
                     value={item}
                   >{`${item}x de ${new Intl.NumberFormat('pt-BR', {
