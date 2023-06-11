@@ -29,7 +29,12 @@ const Checkout = () => {
         <div className="md:col-span-8 col-span-12 bg-black/50 rounded-md p-5 mt-32 md:mt-0">
           <StepperCheckout step={step} />
           <span className="my-4 flex bg-gray-800 w-full h-[1px]"></span>
-          <FormPayment step={step} setStep={setStep} cepDigited={cep} />
+          <FormPayment
+            step={step}
+            setStep={setStep}
+            cepDigited={cep}
+            productValue={productValue}
+          />
         </div>
         <div className="md:col-span-4 col-span-12 bg-black/50 rounded-md p-5 sticky top-28 h-fit w-full">
           <InfoCheckout productValue={productValue} />

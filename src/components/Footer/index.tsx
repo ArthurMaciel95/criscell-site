@@ -1,13 +1,14 @@
 import React from 'react'
 import { Copyright } from './Copyright'
 import Link from 'next/link'
+import { Icon } from '@iconify/react'
 
 export const Footer = () => {
   return (
     <footer className="gradient-footer pt-10">
       <div className="main_container text-white flex gap-10 ">
         <div>
-          <h3 className="text-xl uppercase font-bold mb-2">Páginas</h3>
+          <h3 className="text-base uppercase font-bold mb-2">Navegação</h3>
           <Link href="/politica-de-privacidade">
             <p className="hover:underline cursor-pointer">
               Politica de Privacidade
@@ -20,6 +21,88 @@ export const Footer = () => {
           <Link href="/fale-conosco">
             <p className="hover:underline cursor-pointer">Fale Conosco</p>
           </Link>
+        </div>
+        <div>
+          <h3 className="text-base uppercase font-bold mb-2">
+            Forma de pagamento
+          </h3>
+          <div className="grid grid-cols-3 gap-3">
+            <img
+              src="/img/bandeiras/visa.svg"
+              alt="bandeira visa"
+              title="VISA"
+              className="w-[50px] aspect-video bg-white rounded-md"
+            />
+            <img
+              src="/img/bandeiras/master.svg"
+              alt="bandeira visa"
+              title="MASTERCARD"
+              className="w-[50px] aspect-video bg-white rounded-md"
+            />
+            <img
+              src="/img/bandeiras/maestro.svg"
+              alt="bandeira visa"
+              title="MASTERCARD MAESTRO"
+              className="w-[50px] aspect-video bg-white rounded-md"
+            />
+            <img
+              src="/img/bandeiras/elo.svg"
+              alt="bandeira visa"
+              title="ELO"
+              className="w-[50px] aspect-video bg-white rounded-md"
+            />
+            <img
+              src="/img/bandeiras/hipercard.svg"
+              alt="bandeira visa"
+              title="HIPERCARD"
+              className="w-[50px] aspect-video bg-white rounded-md"
+            />
+            <img
+              src="/img/bandeiras/hiper-color.svg"
+              alt="bandeira visa"
+              title="HIPER"
+              className="w-[50px] aspect-video bg-white rounded-md"
+            />
+            <img
+              src="/img/bandeiras/pix.svg"
+              alt="bandeira visa"
+              title="PIX"
+              className="w-[50px] aspect-video object-contain bg-white rounded-md"
+            />
+          </div>
+        </div>
+        <div>
+          <h3 className="text-base uppercase font-bold mb-2">CONTATO</h3>
+          <div className="">
+            <p className="flex items-center">
+              <Icon
+                icon="solar:phone-linear"
+                className="mr-1"
+                fontSize={20}
+                color="white"
+              />{' '}
+              (35) 9763-2886
+            </p>
+            <p className="flex items-center">
+              {' '}
+              <Icon
+                icon="mi:email"
+                className="mr-1"
+                fontSize={20}
+                color="white"
+              />{' '}
+              celio9@hotmail.com
+            </p>
+            <p className="flex items-center">
+              <Icon
+                icon="uil:map-marker"
+                className="mr-1"
+                fontSize={20}
+                color="white"
+              />
+              Avenida Marechal Castelo Branco, 356, Loja
+            </p>
+          </div>
         </div>
       </div>
       <Copyright />

@@ -30,12 +30,15 @@ const ProductDetail = () => {
     }
   }
 
+  const TAXES = 0.0288
+  const AMOUNT = 450 + 450 * TAXES
+
   function randomRange(myMin: number, myMax: number) {
     return Math.floor(Math.random() * (myMax - myMin + 1) + myMin)
   }
 
   const peopleWatchNowTimer = useCallback(() => {
-    let randomNumber = randomRange(1, 6)
+    let randomNumber = randomRange(2, 6)
     setPeopleWatchProductNow(randomNumber)
   }, [])
 
@@ -171,16 +174,16 @@ const ProductDetail = () => {
                         ? new Intl.NumberFormat('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
-                          }).format(Number(selectedShipping.price) + 450)
+                          }).format(Number(selectedShipping.price) + AMOUNT)
                         : new Intl.NumberFormat('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
-                          }).format(450)}
+                          }).format(AMOUNT)}
                       {/* {quantity <= 1 && ( */}
                       <small className="text-sm font-light">/cada</small>
                       {/*  )} */}
                     </h2>
-
+                    <small>{`em até 12x  (taxa do cartão de crédito incluída)`}</small>
                     <p
                       className={`my-2 transition-all text-sm text-green-500 ${
                         selectedShipping
@@ -205,18 +208,18 @@ const ProductDetail = () => {
                     aparelhos de Som, porteiro eletrônico, placas inverter,
                     enfim, qualquer placa de circuitos eletrônicos.
                   </p>
-                  <p className="my-4 flex items-center animate-pulse from-brand-green-400  to-brand-green-700   bg-gradient-to-t w-fit p-2 rounded-md shadow-xl">
+                  <p className="my-4 flex items-center animate-pulse bg-red-600   w-fit p-1 rounded-md shadow-xl">
                     <Icon
-                      icon="pepicons-pop:eye"
+                      icon="ph:eye"
                       color="white"
-                      fontSize={28}
+                      fontSize={24}
                       className="mr-2"
                     />
 
-                    <strong className="mr-1">
+                    <p className="mr-1 text-sm">
                       {peopleWatchProductNow} Pessoa(s) estão visualizando esse
                       produto!
-                    </strong>
+                    </p>
                   </p>
                 </div>
               </div>

@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react'
 import React from 'react'
 
 export const InfoCheckout = ({ productValue }: { productValue: any }) => {
@@ -15,7 +16,7 @@ export const InfoCheckout = ({ productValue }: { productValue: any }) => {
             <strong className="text-white">Marca:</strong> Criscell
           </p>
           <p className="text-white/70">
-            <strong className="text-white">Descricão:</strong> Aparelho medidos
+            <strong className="text-white">Descricão:</strong> Aparelho medidor
             de curto.
           </p>
         </div>
@@ -46,6 +47,10 @@ export const InfoCheckout = ({ productValue }: { productValue: any }) => {
           Prazo de entrega:{' '}
           <strong>{productValue?.shippingInfo.delivery_time} dias</strong>
         </p>
+        <small className="font-normal flex items-center mt-2">
+          <Icon icon="ci:info" color="white" className="mr-1 " fontSize={18} />
+          Taxa única de 2,88%
+        </small>
       </p>
       <span className="bg-white/10 w-full h-[1px] flex my-4"></span>
       <div className="p-4 bg-gray-800 rounded-md pointer-events-none select-none">

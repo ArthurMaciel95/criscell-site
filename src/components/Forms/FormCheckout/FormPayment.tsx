@@ -36,8 +36,12 @@ export const FormPayment = ({
   step,
   setStep,
   cepDigited,
+  productValue,
 }: {
   step: 1 | 2 | 3
+  setStep: React.Dispatch<React.SetStateAction<1 | 2 | 3>>
+  cepDigited: string
+  productValue: any
 }) => {
   const [cep, setCep] = useState('')
   const [accessTokenIpay, setAccessTokenIpay] = useState('')
@@ -558,28 +562,36 @@ export const FormPayment = ({
               />
             </div>
           </div>
-          <div className="md:col-span-1 col-span-3">
+          <div className="md:col-span-2 col-span-3">
             <div className="text-white flex flex-col">
               <label htmlFor="parcelas">Parcelas</label>
               <select
                 name="installments"
                 id="installments"
-                className="input-text"
+                className="input-text py-2 px-4"
                 onChange={handleForm}
                 value={form.installments}
               >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
+                  <option
+                    className="text-base"
+                    value={item}
+                  >{`${item}x de ${new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  }).format(
+                    Number(
+                      (productValue?.price +
+                        productValue?.price * (item * 0.0288)) /
+                        item
+                    )
+                  )}  total de ${new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  }).format(
+                    productValue?.price + productValue?.price * (item * 0.0288)
+                  )}`}</option>
+                ))}
               </select>
             </div>
           </div>
