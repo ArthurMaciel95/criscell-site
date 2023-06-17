@@ -42,7 +42,7 @@ export default async function handler(req: any, res: any) {
           amount: amount * 100,
           capture_method: 'ecommerce',
           payment_method: 'credit',
-          installments: installments,
+          installments: 1,
         },
         card: {
           token: card_token,

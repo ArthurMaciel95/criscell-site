@@ -66,7 +66,7 @@ export const FormPayment = ({
     card_cvv: '',
     card_expiration_month: '',
     card_expiration_year: '',
-    installments: 1,
+    /*  installments: 1, */
   })
   const router = useRouter()
   const {
@@ -93,6 +93,7 @@ export const FormPayment = ({
 
   useEffect(() => {
     getCardToken()
+    getAccessTokenTransation()
   }, [])
 
   useEffect(() => {
@@ -209,7 +210,6 @@ export const FormPayment = ({
 
   async function postTransaction() {
     const id = toast.loading('Processando pagamento...')
-    await getAccessTokenTransation()
     const payer_ip = await getIp()
     const formPayment = document.forms[0]
 
@@ -231,7 +231,7 @@ export const FormPayment = ({
       card_token: formPayment.querySelector('input[name="ip[token]"]').value,
       fingerprint: formPayment.querySelector('input[name="ip[session_id]"]')
         .value,
-      installments: form.installments,
+      /*  installments: form.installments, */
     }
     console.log(payload)
 
@@ -488,86 +488,107 @@ export const FormPayment = ({
       )}
 
       {step === 3 && paymentMethod === 'credit' && (
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
-          <input
-            type="text"
-            data-ip="method"
-            value="credit_card"
-            className="hidden"
-          />
-          <div className="md:col-span-3 col-span-5">
-            <div className="flex flex-col text-white">
-              <label>Nome completo do titular</label>
-              <input
-                type="text"
-                data-ip="card-holder-name"
-                name="cardholder_name"
-                className="input-text"
-                placeholder=" "
-                onChange={handleForm}
-                value={form.cardholder_name}
-              />
+        <>
+          <div className="flex flex-col items-start py-2 bg-brand-blue-500 p-4 rounded-md my-2">
+            <p className=" text-white">
+              Para realizar pagamento em parcela contatar no número:{' '}
+            </p>
+            <div className="flex text-white">
+              <a
+                href="https://api.whatsapp.com/send?phone=553597632886"
+                target="_blank"
+                rel="noreferrer"
+                className="flex"
+              >
+                <Icon
+                  icon="ic:twotone-whatsapp"
+                  color="white"
+                  className="mr-2 text-2xl"
+                />
+                <p>(35) 9763-2886</p>
+              </a>
             </div>
           </div>
-          <div className="md:col-span-2 col-span-5">
-            <div className="text-white flex flex-col">
-              <label>CVV</label>
-              <input
-                type="text"
-                data-ip="card-cvv"
-                name="card_cvv"
-                placeholder=" "
-                className="mask-cvv text-black input-text"
-                onChange={handleForm}
-                value={form.card_cvv}
-                maxLength={3}
-              />
-            </div>
-          </div>
-          <div className="md:col-span-3 col-span-5 flex flex-col text-white">
-            <label>Número do Cartão</label>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
             <input
               type="text"
-              data-ip="card-number"
-              name="card_number"
-              placeholder=" "
-              className="mask-number-card input-text"
-              value={form.card_number}
-              onChange={handleForm}
+              data-ip="method"
+              value="credit_card"
+              className="hidden"
             />
-          </div>
+            <div className="md:col-span-3 col-span-5">
+              <div className="flex flex-col text-white">
+                <label>Nome completo do titular</label>
+                <input
+                  type="text"
+                  data-ip="card-holder-name"
+                  name="cardholder_name"
+                  className="input-text"
+                  placeholder=" "
+                  onChange={handleForm}
+                  value={form.cardholder_name}
+                />
+              </div>
+            </div>
+            <div className="md:col-span-2 col-span-5">
+              <div className="text-white flex flex-col">
+                <label>CVV</label>
+                <input
+                  type="text"
+                  data-ip="card-cvv"
+                  name="card_cvv"
+                  placeholder=" "
+                  className="mask-cvv text-black input-text"
+                  onChange={handleForm}
+                  value={form.card_cvv}
+                  maxLength={3}
+                />
+              </div>
+            </div>
+            <div className="md:col-span-3 col-span-5 flex flex-col text-white">
+              <label>Número do Cartão</label>
+              <input
+                type="text"
+                data-ip="card-number"
+                name="card_number"
+                placeholder=" "
+                className="mask-number-card input-text"
+                value={form.card_number}
+                onChange={handleForm}
+              />
+            </div>
 
-          <div className="md:col-span-2 col-span-3">
-            <div className="flex flex-col text-white">
-              <label>Mês de expiração</label>
-              <input
-                type="text"
-                data-ip="card-expiration-month"
-                name="card_expiration_month"
-                placeholder=" "
-                className="mask-mes text-black input-text"
-                onChange={handleForm}
-                value={form.card_expiration_month}
-                maxLength={2}
-              />
+            <div className="md:col-span-2 col-span-3">
+              <div className="flex flex-col text-white">
+                <label>Mês de expiração</label>
+                <input
+                  type="text"
+                  data-ip="card-expiration-month"
+                  name="card_expiration_month"
+                  placeholder=" "
+                  className="mask-mes text-black input-text"
+                  onChange={handleForm}
+                  value={form.card_expiration_month}
+                  maxLength={2}
+                />
+              </div>
             </div>
-          </div>
-          <div className="md:col-span-2 col-span-3">
-            <div className="text-white flex flex-col">
-              <label>Ano de expiração</label>
-              <input
-                type="text"
-                data-ip="card-expiration-year"
-                name="card_expiration_year"
-                placeholder=" "
-                className="mask-ano input-text"
-                maxLength={2}
-                onChange={handleForm}
-                value={form.card_expiration_year}
-              />
+            <div className="md:col-span-2 col-span-3">
+              <div className="text-white flex flex-col">
+                <label>Ano de expiração</label>
+                <input
+                  type="text"
+                  data-ip="card-expiration-year"
+                  name="card_expiration_year"
+                  placeholder=" "
+                  className="mask-ano input-text"
+                  maxLength={2}
+                  onChange={handleForm}
+                  value={form.card_expiration_year}
+                />
+              </div>
             </div>
-          </div>
-          <div className="md:col-span-2 col-span-3">
+            {/* <div className="md:col-span-2 col-span-3">
             <div className="text-white flex flex-col">
               <label htmlFor="parcelas">Parcelas</label>
               <select
@@ -589,32 +610,33 @@ export const FormPayment = ({
                 ))}
               </select>
             </div>
+          </div> */}
+            <div className="md:cols-span-2 col-span-5 flex justify-between">
+              <button
+                className="py-3 px-6 bg-brand-gray-50/20 text-white font-semibold text-xl rounded-lg w-fit"
+                onClick={() => setStep((step) => step - 1)}
+              >
+                Voltar
+              </button>
+              <button
+                className="py-3 min-w-[228px] flex items-center justify-center px-6 bg-brand-green-400 text-white font-semibold text-xl rounded-lg w-fit"
+                type="submit"
+                id="submit"
+                disabled={isSubmitting}
+              >
+                {loading ? (
+                  <Icon
+                    icon="eos-icons:bubble-loading"
+                    color="white"
+                    fontSize={28}
+                  />
+                ) : (
+                  'Realizar pagamento'
+                )}
+              </button>
+            </div>
           </div>
-          <div className="md:cols-span-2 col-span-5 flex justify-between">
-            <button
-              className="py-3 px-6 bg-brand-gray-50/20 text-white font-semibold text-xl rounded-lg w-fit"
-              onClick={() => setStep((step) => step - 1)}
-            >
-              Voltar
-            </button>
-            <button
-              className="py-3 min-w-[228px] flex items-center justify-center px-6 bg-brand-green-400 text-white font-semibold text-xl rounded-lg w-fit"
-              type="submit"
-              id="submit"
-              disabled={isSubmitting}
-            >
-              {loading ? (
-                <Icon
-                  icon="eos-icons:bubble-loading"
-                  color="white"
-                  fontSize={28}
-                />
-              ) : (
-                'Realizar pagamento'
-              )}
-            </button>
-          </div>
-        </div>
+        </>
       )}
     </form>
   )
