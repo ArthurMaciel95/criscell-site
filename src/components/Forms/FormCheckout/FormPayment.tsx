@@ -214,7 +214,7 @@ export const FormPayment = ({
     const formPayment = document.forms[0]
 
     const payload = {
-      amount: 1,
+      amount: productValue.price,
       payment_token: paymentToken,
       cvv: form.card_cvv,
       card_holder_name: form.cardholder_name,
@@ -491,7 +491,7 @@ export const FormPayment = ({
         <>
           <div className="flex flex-col items-start py-2 bg-brand-blue-500 p-4 rounded-md my-2">
             <p className=" text-white">
-              Para realizar pagamento em parcela contatar no número:{' '}
+              Para realizar pagamento parcelado contatar no número:{' '}
             </p>
             <div className="flex text-white">
               <a
