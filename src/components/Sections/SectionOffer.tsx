@@ -27,9 +27,9 @@ export const SectionOffer = () => {
           Entrega para todo o Brasil
         </h3>
         <img src="/img/produto/aparelho-3-.png" alt="" className="mt-20" />{' '}
-        <div className="mx-auto flex mt-20  max-w-[700px] items-center justify-center">
+        {/*  <div className="mx-auto flex mt-20  max-w-[700px] items-center justify-center">
           <img src="/img/offer-1.png" alt="" />
-        </div>
+        </div> */}
         <Link href="/product">
           <button className="mt-20 bg-gradient-to-t px-9 py-7 md:w-[600px] text-4xl justify-center flex text-white font-semibold rounded-lg from-brand-green-400  to-brand-green-700 items-center">
             Comprar Agora{' '}
