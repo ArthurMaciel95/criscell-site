@@ -13,7 +13,7 @@ const ProductDetail = () => {
   const [peopleWatchProductNow, setPeopleWatchProductNow] = useState(4)
   const [selectedShipping, setSelectedShipping] =
     useState<ShippingOption | null>(null)
-  const VALUE_OF_PRODUCT = 450
+
   /* const [quantity, setQuantity] = useState(1) */
   interface ShippingOption {
     name: string
@@ -54,7 +54,7 @@ const ProductDetail = () => {
     let dataInfo = {
       cep,
       shippingInfo: selectedShipping,
-      price: Number(selectedShipping.price) + VALUE_OF_PRODUCT,
+      price: Number(selectedShipping.price) + AMOUNT,
     }
 
     localStorage.setItem('selectedShipping', JSON.stringify(dataInfo))
@@ -298,7 +298,7 @@ const ProductDetail = () => {
                   className="px-4 mt-2 py-4 rounded-md max-w-[300px] text-lg bg-white/10 text-gray-300 font-normal"
                   onChange={(e) => setCep(e.target.value)}
                   value={cep}
-                  maxLength={8}
+                  maxLength={9}
                 />
                 <button
                   disabled={cep.length < 8}

@@ -13,6 +13,7 @@ import { AddressForm } from './AddressForm'
 import { PaymentMethodForm } from './PaymentMethodForm'
 import { CreditCardForm } from './CreditCardForm'
 import { state } from '../../../helpers/states'
+import { useRouter } from 'next/router'
 /* import { cities } from '../../../helpers/cities' */
 
 interface IForm {
@@ -67,6 +68,7 @@ export const FormPayment = ({
     card_expiration_year: '',
     installments: 1,
   })
+  const router = useRouter()
   const {
     register,
     getValues,
@@ -136,7 +138,7 @@ export const FormPayment = ({
   async function getAccessTokenTransation() {
     try {
       const response = await axios.get(
-        '/api/infinitepay/get-access-token?scope=transaction',
+        '/api/infinitepay/get-access-token?scope=transactions',
         {
           headers: {
             Authorization: `Bearer ${accessTokenIpay}`,
@@ -155,9 +157,9 @@ export const FormPayment = ({
       const response = await axios.post(
         '/api/infinitepay/card-tokenization',
         {
-          number: '5502098506232160',
-          expiration_month: '05',
-          expiration_year: '29',
+          number: form.card_number,
+          expiration_month: form.card_expiration_month,
+          expiration_year: form.card_expiration_year,
         },
         {
           headers: {
@@ -185,15 +187,15 @@ export const FormPayment = ({
 
   async function generateForm() {
     setLoading(true)
-
     await cardTokenization()
     var ipay = new IPay({ access_token: accessTokenIpay })
-    console.log(ipay)
+
     ipay.listeners = {
-      'result:success': function () {
-        postTransaction()
+      'result:success': async function () {
+        await postTransaction()
       },
       'result:error': function (error: any) {
+        setLoading(false)
         alert(
           'Ocorreu um erro ao finalizar sua transação, tente novamente, se o erro persistir entre em contato com o suporte'
         )
@@ -212,12 +214,11 @@ export const FormPayment = ({
     const formPayment = document.forms[0]
 
     const payload = {
-      amount: 10,
+      amount: 1,
       payment_token: paymentToken,
       cvv: form.card_cvv,
       card_holder_name: form.cardholder_name,
       document_number: form.cardholder_cpf,
-
       email: form.email,
       phone_number: form.phone_number,
       address: form.address + ' ' + form.number,
@@ -248,12 +249,14 @@ export const FormPayment = ({
 
       toast.remove(id)
       toast.success('Pagamento realizado com sucesso!')
+
+      router.push('/payment-success')
       setLoading(false)
     } catch (error) {
       setLoading(false)
       toast.remove(id)
 
-      toast.error(error.response.statusText)
+      toast.error(error.response.data.message)
       console.log(error)
     }
     setLoading(false)
@@ -460,7 +463,9 @@ export const FormPayment = ({
                     className="w-[100px] brightness-50"
                   />
                 </td>
-                <td className="text-white/50 font-light">Pix (indisponível)</td>
+                <td className="text-white/50 ">
+                  <p className="font-light"> Pix (indisponível) </p>{' '}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -580,18 +585,7 @@ export const FormPayment = ({
                   >{`${item}x de ${new Intl.NumberFormat('pt-BR', {
                     style: 'currency',
                     currency: 'BRL',
-                  }).format(
-                    Number(
-                      (productValue?.price +
-                        productValue?.price * (item * 0.0288)) /
-                        item
-                    )
-                  )}  total de ${new Intl.NumberFormat('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL',
-                  }).format(
-                    productValue?.price + productValue?.price * (item * 0.0288)
-                  )}`}</option>
+                  }).format(Number(productValue?.price / item))} `}</option>
                 ))}
               </select>
             </div>
@@ -606,6 +600,7 @@ export const FormPayment = ({
             <button
               className="py-3 min-w-[228px] flex items-center justify-center px-6 bg-brand-green-400 text-white font-semibold text-xl rounded-lg w-fit"
               type="submit"
+              id="submit"
               disabled={isSubmitting}
             >
               {loading ? (

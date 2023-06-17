@@ -27,8 +27,8 @@ export default async function handler(req: any, res: any) {
           payment_method: 'pix',
           order_id: uuid,
           callback: {
-            validate: `https://www.criscell.com.br/validation_callback?order_id=${uuid}`,
-            confirm: `https://www.criscell.com.br/confirmation_callback?order_id=${uuid}`,
+            validate: `https://www.criscell.com.br/checkout?order_id=${uuid}`,
+            confirm: `https://www.criscell.com.br/checkout?order_id=${uuid}`,
             secret: uuid,
           },
         },

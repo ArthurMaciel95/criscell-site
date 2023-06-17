@@ -37,88 +37,16 @@ export default async function handler(req: any, res: any) {
 
     const result = await axios.post(
       'https://api.infinitepay.io/v2/transactions',
-      /* {
-        payment: {
-          amount: amount * 10,
-          capture_method: 'ecommerce',
-          payment_method: 'credit',
-        },
-        card: {
-          cvv: cvv,
-          token: payment_token,
-          card_holder_name: card_holder_name,
-        },
-        customer: {
-          document_number: document_number,
-          first_name: fist_name,
-          last_name: last_name,
-          email: email,
-          phone_number: phone_number,
-          address: address,
-          complement: complement,
-          city: city,
-          state: state,
-          country: country,
-          zip: zip,
-        },
-        order: {
-          id: randomUUID(),
-          amount: amount * 10,
-          items: [
-            {
-              id: 1,
-              description: 'Criscell, detector de curto-circuito',
-              quantity: 1,
-              amount: amount * 10,
-            },
-          ],
-          delivery_details: {
-            email: email,
-            name: card_holder_name,
-            phone_number: phone_number,
-            address: {
-              line1: complement,
-              line2: complement,
-              city: city,
-              state: state,
-              country: 'BR',
-              zip: zip,
-            },
-          },
-        },
-        billing_details: {
-          document_number: document_number,
-          email: email,
-          name: card_holder_name,
-          phone_number: phone_number,
-          address: {
-            line1: complement,
-            line2: state,
-            city: city,
-            state: state,
-            country: 'BR',
-            zip: zip,
-          },
-        },
-        metadata: {
-          origin: 'Criscell - Detectores de curto-circuito',
-          store_url: 'https://www.criscell.com.br/',
-          risk: {
-            session_id: fingerprint,
-            payer_ip: payer_ip,
-          },
-        },
-      }, */
       {
         payment: {
-          amount: 100,
+          amount: amount * 100,
           capture_method: 'ecommerce',
           payment_method: 'credit',
           installments: installments,
         },
         card: {
+          token: card_token,
           cvv: cvv,
-          token: payment_token,
           card_holder_name: card_holder_name,
         },
         customer: {
@@ -131,23 +59,24 @@ export default async function handler(req: any, res: any) {
           complement: complement,
           city: city,
           state: state,
-          country: country,
           zip: zip,
+          country: country,
         },
         order: {
           id: 'pedido-1234',
-          amount: 100,
+          amount: amount * 100,
           items: [
             {
               id: 'item1',
-              description: 'Item1',
-              quantity: 2,
-              amount: 100,
+              description: 'criscell - detector de curto',
+              quantity: 1,
+              amount: amount * 100,
             },
           ],
           delivery_details: {
-            email: email,
+            document_number: document_number,
             name: card_holder_name,
+            email: email,
             phone_number: phone_number,
             address: {
               line1: address,
@@ -161,8 +90,8 @@ export default async function handler(req: any, res: any) {
         },
         billing_details: {
           document_number: document_number,
-          email: email,
           name: card_holder_name,
+          email: email,
           phone_number: phone_number,
           address: {
             line1: address,
@@ -185,15 +114,22 @@ export default async function handler(req: any, res: any) {
       {
         headers: {
           Authorization: `Bearer ${token}`,
+          acept: 'application/json',
+          'Content-Type': 'application/json',
         },
       }
     )
-
+    console.log(result)
     return res
       .status(200)
       .json({ error: false, message: 'sucesso!', results: result.data })
   } catch (error: any) {
-    res.status(error.response.status).json(error.response.data.message)
+    console.log(error.response.data)
+    res.status(error.response.status).json({
+      error: true,
+      message: error.response.data.message,
+      results: [],
+    })
   }
 }
 

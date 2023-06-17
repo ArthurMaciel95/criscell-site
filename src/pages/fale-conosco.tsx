@@ -41,7 +41,7 @@ const FaleConosco = () => {
   return (
     <div className="my-9">
       {/* Breadcrumbs */}
-      <div className="bg-brand-blue-500 py-8 mt-28 md:mt-44">
+      <div className="bg-brand-blue-500 py-8 mt-28 ">
         <div className="main_container">
           <h3 className="text-white text-2xl font-bold mb-4">Fale Conosco</h3>
 
@@ -64,7 +64,7 @@ const FaleConosco = () => {
           <div className="flex flex-col lg:flex-row mb-2">
             <div className="flex flex-col w-full lg:w-1/2">
               <div className="mb-6 text-white">
-                <p className="text-brand-blue-700 text-2xl font-normal mb-2">
+                <p className="text-brand-blue-700 text-2xl font-bold mb-2">
                   Mande sua mensagem e estaremos retornando o mais breve
                   possível
                 </p>
@@ -87,9 +87,9 @@ const FaleConosco = () => {
                     href="https://goo.gl/maps/YJ8AMzJmFRGnCgjD9"
                     target="_blanc"
                   >
-                    Rua D. Pedro I, nº 1000
+                    Avenida Marechal Castelo Branco, 356, Loja
                   </a>
-                  <p>Belém-PA</p>
+                  <p>Minas Gerais - MG</p>
                 </div>
                 {/*    <div className="w-full lg:w-1/2 p-2 text-center md:text-start">
                   <p className="text-brand-black-50 font-semibold">Unidade Cidade Nova</p>
@@ -101,14 +101,14 @@ const FaleConosco = () => {
                   <div className="flex flex-col">
                     {/*   <a href="tel:+559133463106">(91) 3346-3106</a> */}
                     <a
-                      href="https://api.whatsapp.com/send?phone=5591993743000"
+                      href="https://api.whatsapp.com/send?phone=553597632886"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      (91) 99374-3000 (Whatsapp)
+                      (35) 9763-2886 (Whatsapp)
                     </a>
                   </div>
-                  <a href="mailto:site@artmil.com.br">site@artmil.com.br</a>
+                  <a href="mailto:site@artmil.com.br">celio9@hotmail.com</a>
                 </div>
               </div>
             </div>
@@ -117,7 +117,7 @@ const FaleConosco = () => {
               <form action="" onSubmit={handleSubmit(handlePost)}>
                 <label className="flex flex-col items-center mb-3 ">
                   <input
-                    className="input-default w-full"
+                    className="input-text w-full"
                     type="text"
                     placeholder="Nome"
                     {...register('nome', { required: true })}
@@ -133,7 +133,7 @@ const FaleConosco = () => {
                     mask={'(99)99999-9999'}
                     type="text"
                     placeholder="(99) 99999-9999"
-                    className="input-default w-full"
+                    className="input-text w-full"
                     {...register('telefone', { required: true })}
                   />
                   {/*  <input
@@ -150,7 +150,7 @@ const FaleConosco = () => {
                 </label>
                 <label className="flex flex-col items-center mb-3 ">
                   <input
-                    className="input-default w-full"
+                    className="input-text w-full"
                     type="email"
                     placeholder="Email"
                     {...register('email', { required: true })}
@@ -163,7 +163,7 @@ const FaleConosco = () => {
                 </label>
                 <label className="flex flex-col items-center mb-3 ">
                   <input
-                    className="input-default w-full"
+                    className="input-text w-full"
                     type="text"
                     placeholder="Assunto"
                     {...register('assunto', { required: true })}
@@ -174,9 +174,9 @@ const FaleConosco = () => {
                     </span>
                   )}
                 </label>
-                <label className="flex flex-col items-center mb-3">
+                {/*  <label className="flex flex-col items-center mb-3">
                   <select
-                    className="p-2 w-full bg-transparent border border-[#c7c7c7] rounded-none h-[58px] flex items-center justify-between input-default"
+                    className="p-2 w-full bg-transparent   rounded-none h-[58px] flex items-center justify-between input-text"
                     {...register('tipo', { required: true })}
                   >
                     <option value="">Selecione um Setor</option>
@@ -190,11 +190,11 @@ const FaleConosco = () => {
                       O Setor é obrigatório
                     </span>
                   )}
-                </label>
+                </label> */}
                 <label className="flex flex-col items-center mb-3">
                   <textarea
                     {...register('texto', { required: true })}
-                    className="textarea flex-col textarea-bordered text-brand-gray-100 py-3 font-normal px-4 border w-full mb-6"
+                    className="input-text flex-col textarea-bordered text-brand-gray-100 py-3 font-normal px-4  w-full mb-6"
                     placeholder="Mensagem"
                   ></textarea>
                   {errors.texto && (

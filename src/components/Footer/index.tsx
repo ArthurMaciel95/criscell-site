@@ -104,6 +104,9 @@ export const Footer = () => {
             </p>
           </div>
         </div>
+        <div className="flex items-end ">
+          <small className="text-white">versão da aplicação: 1.0 (beta)</small>
+        </div>
       </div>
       <Copyright />
     </footer>

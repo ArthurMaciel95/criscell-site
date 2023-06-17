@@ -8,7 +8,7 @@ const CondigoesDeUso = () => {
       <div className="my-9">
         {/* Breadcrumbs */}
 
-        <div className="bg-brand-blue-500 py-8 mt-28 md:mt-44">
+        <div className="bg-brand-blue-500 py-8 mt-28 md:mt-28">
           <div className="main_container">
             <h3 className="text-white text-2xl font-bold mb-4">
               Condições de Uso

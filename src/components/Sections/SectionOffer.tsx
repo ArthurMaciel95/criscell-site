@@ -12,7 +12,7 @@ export const SectionOffer = () => {
         <a
           target="_blank"
           rel="noreferrer"
-          href="https://api.whatsapp.com/send?phone=5535997632886"
+          href="https://api.whatsapp.com/send?phone=553597638226"
         >
           <button className=" mt-10 bg-gradient-to-t px-9 py-7 md:w-[600px] text-4xl justify-center flex text-white font-semibold rounded-lg from-brand-green-400  to-brand-green-700 items-center">
             {' '}

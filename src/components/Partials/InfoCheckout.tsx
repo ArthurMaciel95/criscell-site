@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 
 export const InfoCheckout = ({ productValue }: { productValue: any }) => {
+  console.log(productValue)
   return (
     <>
       <h4 className="text-white font-bold mb-2">RESUMO</h4>
@@ -27,7 +28,7 @@ export const InfoCheckout = ({ productValue }: { productValue: any }) => {
           {new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL',
-          }).format(450)}
+          }).format(/* productValue?.price */ 462.96)}
         </span>
       </p>
       <p className="font-light text-white/70">
@@ -49,7 +50,7 @@ export const InfoCheckout = ({ productValue }: { productValue: any }) => {
         </p>
         <small className="font-normal flex items-center mt-2">
           <Icon icon="ci:info" color="white" className="mr-1 " fontSize={18} />
-          Taxa única de 2,88%
+          Taxa única de 2,88% no cartão.
         </small>
       </p>
       <span className="bg-white/10 w-full h-[1px] flex my-4"></span>

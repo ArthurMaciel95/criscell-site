@@ -8,7 +8,7 @@ const PoliticaDePrivacidade = () => {
       <div className="my-9">
         {/* Breadcrumbs */}
 
-        <div className="bg-brand-blue-500 py-8 mt-28 md:mt-44">
+        <div className="bg-brand-blue-500 py-8 mt-28 md:mt-28">
           <div className="main_container">
             <h3 className="text-white text-2xl font-bold mb-4">
               Política de privacidade de dados
@@ -149,8 +149,8 @@ const PoliticaDePrivacidade = () => {
                 Como os Cookies de terceiros são usados?
               </p>
               <p className="mb-2">
-                As informações pessoais que A ARTMIL coleta permite manter você
-                atualizado sobre os mais recentes anúncios de produtos da
+                As informações pessoais que A CRISCELL coleta permite manter
+                você atualizado sobre os mais recentes anúncios de produtos da
                 empresa. Se não quiser participar de nossa lista de
                 distribuição, poderá optar por não receber a qualquer momento.
                 Também usamos as informações pessoais para criar, desenvolver,
@@ -260,7 +260,7 @@ const PoliticaDePrivacidade = () => {
               </ol>
               <p className="mb-2">
                 Para qualquer dos pedidos elencados acima, você deverá entrar em
-                contato com a A ARTMIL por meio das informações de contato
+                contato com a A CRISCELL por meio das informações de contato
                 disponibilizadas.
               </p>
 
@@ -273,7 +273,7 @@ const PoliticaDePrivacidade = () => {
                 devidamente informadas neste espaço.
               </p>
               <p>
-                A ARTMIL garante que utiliza os seus dados pessoais de
+                A CRISCELL garante que utiliza os seus dados pessoais de
                 endereçamento, pagamento e conteúdo do pedido, apenas para fins
                 de processamento dos pedidos realizados, não sendo, portanto,
                 divulgados em hipótese alguma. Em relação à segurança no tráfego
@@ -358,9 +358,9 @@ const PoliticaDePrivacidade = () => {
                 tiver alguma dúvida sobre esta Política de Privacidade, mesmo
                 após sua leitura, ou precisar interagir conosco sobre assuntos
                 envolvendo os seus dados pessoais, poderá fazê-lo através do
-                contato com o nosso Encarregado Eduardo Woelfer pelo e-mail:{' '}
-                <a href="mailto:lgpd@artmil.com.br" className="link">
-                  lgpd@artmil.com.br
+                contato com o nosso Encarregado Celio Artur pelo e-mail:{' '}
+                <a href="mailto:celio9@hotmail.com" className="link">
+                  celio9@hotmail.com
                 </a>
               </p>
             </div>
