@@ -22,15 +22,15 @@ export const InfoCheckout = ({ productValue }: { productValue: any }) => {
           </p>
         </div>
       </div>
-      <p className="font-light text-white/70">
-        Valor do produto:{' '}
+      {/*     <p className="font-light text-white/70">
+        Valor do produto (Pix):{' '}
         <span className="text-green-600 font-bold">
           {new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL',
-          }).format(/* productValue?.price */ 462.96)}
+          }).format( 400)}
         </span>
-      </p>
+      </p> */}
       <p className="font-light text-white/70">
         Frete:{' '}
         <span className="font-bold text-white">
@@ -48,20 +48,24 @@ export const InfoCheckout = ({ productValue }: { productValue: any }) => {
           Prazo de entrega:{' '}
           <strong>{productValue?.shippingInfo.delivery_time} dias</strong>
         </p>
-        <small className="font-normal flex items-center mt-2">
+        {/*   <small className="font-normal flex items-center mt-2">
           <Icon icon="ci:info" color="white" className="mr-1 " fontSize={18} />
           Taxa única de 2,88% no cartão.
-        </small>
+        </small> */}
       </p>
       <span className="bg-white/10 w-full h-[1px] flex my-4"></span>
       <div className="p-4 bg-gray-800 rounded-md pointer-events-none select-none">
-        <h2 className="flex items-center">
+        <p className="text-white font-normal text-base items-center flex">
+          <Icon icon="ic:round-pix" className="text-2xl mr-2" color="#00bdae" />
+          À vista no PIX (Melhor opção)
+        </p>
+        <h2 className="flex items-center my-1">
           <strong className="text-xl mr-4">TOTAL: </strong>
           <strong className="font-bold text-white">
             {new Intl.NumberFormat('pt-BR', {
               style: 'currency',
               currency: 'BRL',
-            }).format(productValue?.price ?? 0)}
+            }).format(productValue?.price_pix ?? 0)}
           </strong>
         </h2>
       </div>

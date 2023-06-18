@@ -10,7 +10,7 @@ const Checkout = () => {
   const router = useRouter()
   const [productValue, setProductValue] = useState(null)
   const [cep, setCep] = useState('')
-  const [step, setStep] = useState<1 | 2 | 3>(1)
+  const [step, setStep] = useState<1 | 2 | 3>(2)
   useEffect(() => {
     const productValue = !!localStorage.getItem('selectedShipping')
       ? JSON.parse(localStorage.getItem('selectedShipping') || [])

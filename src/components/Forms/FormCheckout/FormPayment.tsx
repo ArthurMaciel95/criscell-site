@@ -513,7 +513,12 @@ export const FormPayment = ({
                   <input
                     type="radio"
                     name="payment-method"
-                    onClick={() => setPaymentMethod('credit')}
+                    onClick={() =>
+                      /* setPaymentMethod('credit') */ window.open(
+                        `https://pay.infinitepay.io/sanceleletronica/${productValue.price_credit_card}/`,
+                        '_blank'
+                      )
+                    }
                     className="h-4 w-4"
                     checked={paymentMethod === 'credit'}
                   />
@@ -539,22 +544,28 @@ export const FormPayment = ({
                   <img src="/img/pix.png" alt="" className="w-[100px] " />
                 </td>
                 <td className="text-white ">
-                  <p className="font-light"> Pix </p>{' '}
+                  <p className="font-light">
+                    {' '}
+                    Pix{' '}
+                    <span className="bg-brand-green-400 ml-4 text-white font-normal p-1 rounded-md">
+                      Recomendado
+                    </span>
+                  </p>
                 </td>
               </tr>
             </tbody>
           </table>
           <div className="flex justify-between">
-            <button
+            {/*  <button
               className="py-3 px-6 bg-brand-gray-50/20 text-white font-semibold text-xl rounded-lg w-fit"
               onClick={() => setStep((step) => step - 1)}
             >
               Voltar
-            </button>
+            </button> */}
             <button
               className="py-3 px-6 bg-brand-green-400 text-white font-semibold text-xl rounded-lg w-fit disabled:bg-brand-gray-50 disabled:cursor-not-allowed"
               onClick={() => setStep((step) => step + 1)}
-              disabled={paymentMethod === ''}
+              disabled={paymentMethod !== 'pix'}
             >
               Avançar
             </button>

@@ -29,9 +29,8 @@ const ProductDetail = () => {
       results: ShippingOption[]
     }
   }
-
-  const TAXES = 0.0288
-  const AMOUNT = 450 + 450 * TAXES
+  const AMOUNT_CREDIT = 480
+  const AMOUNT_PIX = 400
 
   function randomRange(myMin: number, myMax: number) {
     return Math.floor(Math.random() * (myMax - myMin + 1) + myMin)
@@ -54,7 +53,8 @@ const ProductDetail = () => {
     let dataInfo = {
       cep,
       shippingInfo: selectedShipping,
-      price: Number(selectedShipping.price) + AMOUNT,
+      price_pix: Number(selectedShipping.price) + AMOUNT_PIX,
+      price_credit_card: Number(selectedShipping.price) + AMOUNT_CREDIT,
     }
 
     localStorage.setItem('selectedShipping', JSON.stringify(dataInfo))
@@ -166,24 +166,43 @@ const ProductDetail = () => {
                 </div>
                 <div className="mt-2">
                   <div className="">
-                    <h3 className="font-normal text-white/50 text-base line-through">
-                      R$570,00
-                    </h3>
-                    <h2 className="font-bold text-white">
+                    <h3 className="font-normal text-white/50 text-base ">
                       {selectedShipping
                         ? new Intl.NumberFormat('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
-                          }).format(Number(selectedShipping.price) + AMOUNT)
+                          }).format(
+                            Number(selectedShipping.price) + AMOUNT_CREDIT
+                          )
                         : new Intl.NumberFormat('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
-                          }).format(AMOUNT)}
-                      {/* {quantity <= 1 && ( */}
-                      <small className="text-sm font-light">/cada</small>
-                      {/*  )} */}
-                    </h2>
-                    <small>{`em até 12x  (taxa do cartão de crédito incluída)`}</small>
+                          }).format(AMOUNT_CREDIT)}{' '}
+                      ( cartão de crédito 10x sem juros )
+                    </h3>
+                    <div className="mb-4 mt-2 p-3  rounded-md bg-brand-blue-500 w-fit flex flex-col">
+                      <h2 className="font-bold text-white">
+                        {selectedShipping
+                          ? new Intl.NumberFormat('pt-BR', {
+                              style: 'currency',
+                              currency: 'BRL',
+                            }).format(
+                              Number(selectedShipping.price) + AMOUNT_PIX
+                            )
+                          : new Intl.NumberFormat('pt-BR', {
+                              style: 'currency',
+                              currency: 'BRL',
+                            }).format(AMOUNT_PIX)}
+                        {/* {quantity <= 1 && ( */}
+                        <small className="text-sm font-light">/cada</small>
+                        {/*  )} */}
+                      </h2>
+                      <p className="flex items-center ">
+                        <Icon icon="ic:round-pix" className="text-2xl mr-2" />À
+                        vista no PIX com Desconto.
+                      </p>
+                    </div>
+
                     <p
                       className={`my-2 transition-all text-sm text-green-500 ${
                         selectedShipping
