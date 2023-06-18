@@ -16,6 +16,39 @@ import { state } from '../../../helpers/states'
 import { useRouter } from 'next/router'
 /* import { cities } from '../../../helpers/cities' */
 
+interface IPix {
+  error: false
+  message: string
+  results: {
+    data: {
+      id: string
+      type: string
+      attributes: {
+        nsu: string
+        nsu_host: string
+        card_brand: string
+        card_pin_mode: null
+        br_code: string
+        metadata: {
+          origin: string
+          payment_method: string
+          order_id: string
+          callback: {
+            validate: string
+            confirm: string
+            secret: string
+          }
+          billing_details: {}
+        }
+        authorization_id: null
+        authorization_reason: null
+        created_at: Date
+        authorization_code: string
+      }
+    }
+  }
+}
+
 interface IForm {
   zip: string
   city: string
@@ -31,7 +64,7 @@ interface IForm {
   card_cvv: string
   card_expiration_month: string
   card_expiration_year: string
-  installments: number
+  installments?: number
 }
 export const FormPayment = ({
   step,
@@ -68,6 +101,12 @@ export const FormPayment = ({
     card_expiration_year: '',
     /*  installments: 1, */
   })
+  const [copySuccess, setCopySuccess] = useState('Copiar Código')
+  const [copyIconSuccess, setCopyIconSuccess] = useState(
+    <Icon icon="iconamoon:copy" className="mr-2" />
+  )
+  const textCopy = useRef(null)
+  const [pix, setPix] = useState('')
   const router = useRouter()
   const {
     register,
@@ -123,6 +162,39 @@ export const FormPayment = ({
       console.log(error)
     }
   }
+
+  async function getPixCode() {
+    if (step !== 3 && paymentMethod !== 'pix') return
+
+    setLoading(true)
+
+    try {
+      /*  cleanCart() */
+      const response: IPix = await axios.post(
+        `/api/infinitepay/transacao/pix`,
+        {
+          amount: 450,
+        },
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${accessTokenTransation}`,
+          },
+        }
+      )
+      console.log(response)
+      /*  setDataTransaction(response.data.data.transacao) */
+      setPix(response.data.results.data.attributes.br_code)
+    } catch (error) {
+      setLoading(false)
+      console.log(error)
+    }
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    getPixCode()
+  }, [step])
 
   async function getCardToken() {
     try {
@@ -206,6 +278,14 @@ export const FormPayment = ({
     }
 
     ipay.generate(formElement.current)
+  }
+
+  function copyToClipboard() {
+    navigator.clipboard.writeText(textCopy.current.innerText)
+    setCopySuccess('Copiado!')
+    setCopyIconSuccess(
+      <Icon icon="mingcute:check-2-fill" className="mr-2 text-green-500" />
+    )
   }
 
   async function postTransaction() {
@@ -451,20 +531,15 @@ export const FormPayment = ({
                     name="payment-method"
                     onClick={() => setPaymentMethod('pix')}
                     className="h-4 w-4"
-                    disabled={true}
                     checked={paymentMethod === 'pix'}
                   />
                 </td>
 
                 <td className="flex justify-center">
-                  <img
-                    src="/img/pix.png"
-                    alt=""
-                    className="w-[100px] brightness-50"
-                  />
+                  <img src="/img/pix.png" alt="" className="w-[100px] " />
                 </td>
-                <td className="text-white/50 ">
-                  <p className="font-light"> Pix (indisponível) </p>{' '}
+                <td className="text-white ">
+                  <p className="font-light"> Pix </p>{' '}
                 </td>
               </tr>
             </tbody>
@@ -485,6 +560,80 @@ export const FormPayment = ({
             </button>
           </div>
         </div>
+      )}
+      {step === 3 && paymentMethod === 'pix' && (
+        <>
+          {pix ? (
+            <div>
+              <div className="p-4 w-full md:w-3/4 text-white">
+                <ul className="">
+                  <li className="mb-8">
+                    1.Copie a chave Pix abaixo;
+                    <div className="flex flex-col justify-center items-center">
+                      <img
+                        src={`https://gerarqrcodepix.com.br/api/v1?brcode=${pix}`}
+                        alt="chave pix"
+                      />
+                      <div className="max-w-[420px] p-3 overflow-hidden border-white/40 rounded-md my-3">
+                        <p
+                          ref={textCopy}
+                          className="mb-4 text-sm font-semibold text-brand-blue-700 outline-0"
+                          style={{ wordBreak: 'break-all' }}
+                        >
+                          {pix}
+                        </p>
+                      </div>
+                      <button
+                        onClick={copyToClipboard}
+                        className="flex items-center rounded-full border-2 outline-0 px-4 py-2"
+                      >
+                        {copyIconSuccess}
+                        {copySuccess}
+                      </button>
+                    </div>
+                  </li>
+                  <li className="mb-4">
+                    2. Abra o app do seu banco e encontre a opção de pagamento
+                    "Pix";
+                  </li>
+                  <li className="mb-4">
+                    3. Selecione a função colar, verifique os detalhes e
+                    finalize o pedido;
+                  </li>
+                  <li className="mb-4">
+                    4. Após a confirmação, envie o comprovante de compra
+                    informando seu
+                    <strong className="ml-1">Nome completo</strong> e{' '}
+                    <strong>E-mail</strong> para um dos contatos abaixo:
+                  </li>
+                  <li className="mb-4">
+                    Email:{' '}
+                    <a
+                      href="mailto:comprovante@artmil.com.br"
+                      className="font-semibold text-brand-blue-700"
+                    >
+                      celio9@hotmail.com
+                    </a>
+                  </li>
+                  <li className="mb-4">
+                    Whatsapp:{' '}
+                    <a
+                      href="https://api.whatsapp.com/send?phone=553597632886"
+                      target="_blank"
+                      className="font-semibold text-brand-blue-700"
+                    >
+                      (35) 9763-2886
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          ) : (
+            <>
+              <h2>Carregando pix...</h2>
+            </>
+          )}
+        </>
       )}
 
       {step === 3 && paymentMethod === 'credit' && (

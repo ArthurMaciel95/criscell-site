@@ -2,6 +2,22 @@ import axios from 'axios'
 import { randomUUID } from 'crypto'
 
 import NextCors from 'nextjs-cors'
+
+interface IError {
+  data: {
+    id: string
+    type: string
+    attributes: {
+      nsu: string
+      nsu_host: null
+      authorization_id: null
+      authorization_reason: string
+      created_at: string
+      authorization_code: string
+    }
+  }
+}
+
 export default async function handler(req: any, res: any) {
   await NextCors(req, res, {
     // Options
@@ -23,7 +39,7 @@ export default async function handler(req: any, res: any) {
         amount: amount,
         capture_method: 'pix',
         metadata: {
-          origin: 'criscell',
+          origin: 'CRISCELL',
           payment_method: 'pix',
           order_id: uuid,
           callback: {
