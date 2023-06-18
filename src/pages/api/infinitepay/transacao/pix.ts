@@ -36,7 +36,7 @@ export default async function handler(req: any, res: any) {
     const result = await axios.post(
       'https://api.infinitepay.io/v2/transactions',
       {
-        amount: amount,
+        amount: amount * 100,
         capture_method: 'pix',
         metadata: {
           origin: 'CRISCELL',

@@ -173,7 +173,7 @@ export const FormPayment = ({
       const response: IPix = await axios.post(
         `/api/infinitepay/transacao/pix`,
         {
-          amount: 450,
+          amount: productValue.price_pix,
         },
         {
           method: 'POST',
