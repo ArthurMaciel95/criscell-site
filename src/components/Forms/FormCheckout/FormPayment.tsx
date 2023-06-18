@@ -605,7 +605,7 @@ export const FormPayment = ({
                   </li>
                   <li className="mb-4">
                     2. Abra o app do seu banco e encontre a opção de pagamento
-                    "Pix";
+                    &quot;Pix&quot;
                   </li>
                   <li className="mb-4">
                     3. Selecione a função colar, verifique os detalhes e
@@ -631,6 +631,7 @@ export const FormPayment = ({
                     <a
                       href="https://api.whatsapp.com/send?phone=553597632886"
                       target="_blank"
+                      rel="noreferrer"
                       className="font-semibold text-brand-blue-700"
                     >
                       (35) 9763-2886
