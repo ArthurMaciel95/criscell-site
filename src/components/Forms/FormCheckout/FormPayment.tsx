@@ -515,7 +515,7 @@ export const FormPayment = ({
                     name="payment-method"
                     onClick={() =>
                       /* setPaymentMethod('credit') */ window.open(
-                        `https://pay.infinitepay.io/sanceleletronica/${productValue.price_credit_card}/`,
+                        `https://pay.infinitepay.io/sanceleletronica/480/`,
                         '_blank'
                       )
                     }
