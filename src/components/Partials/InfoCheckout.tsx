@@ -48,10 +48,7 @@ export const InfoCheckout = ({ productValue }: { productValue: any }) => {
           Prazo de entrega:{' '}
           <strong>{productValue?.shippingInfo.delivery_time} dias</strong>
         </p>
-        {/*   <small className="font-normal flex items-center mt-2">
-          <Icon icon="ci:info" color="white" className="mr-1 " fontSize={18} />
-          Taxa única de 2,88% no cartão.
-        </small> */}
+        <p>Valor no Cartão de Crédito: R$ 480,00</p>
       </p>
       <span className="bg-white/10 w-full h-[1px] flex my-4"></span>
       <div className="p-4 bg-gray-800 rounded-md pointer-events-none select-none">

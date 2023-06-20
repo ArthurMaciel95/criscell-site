@@ -180,7 +180,7 @@ const ProductDetail = () => {
                           }).format(AMOUNT_CREDIT)}{' '}
                       ( cartão de crédito 10x sem juros )
                     </h3>
-                    <div className="mb-4 mt-2 p-3  rounded-md bg-brand-blue-500 w-fit flex flex-col">
+                    <div className="mb-4 mt-2 p-3  rounded-md bg-brand-blue-500 w-fit flex flex-col pointer-events-none select-none">
                       <h2 className="font-bold text-white">
                         {selectedShipping
                           ? new Intl.NumberFormat('pt-BR', {

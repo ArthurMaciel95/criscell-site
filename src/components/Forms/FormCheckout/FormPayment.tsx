@@ -50,6 +50,7 @@ interface IPix {
 }
 
 interface IForm {
+  name: string
   zip: string
   city: string
   number: string
@@ -85,6 +86,7 @@ export const FormPayment = ({
   const [paymentMethod, setPaymentMethod] = useState('')
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState<IForm>({
+    name: '',
     zip: '',
     city: '',
     number: '',
@@ -131,9 +133,11 @@ export const FormPayment = ({
   }
 
   useEffect(() => {
-    getCardToken()
-    getAccessTokenTransation()
-  }, [])
+    if (paymentMethod === 'pix') {
+      getAccessTokenTransation()
+      getPixCode()
+    }
+  }, [paymentMethod, step])
 
   useEffect(() => {
     if (cepDigited && step === 1) {
@@ -191,10 +195,6 @@ export const FormPayment = ({
     }
     setLoading(false)
   }
-
-  useEffect(() => {
-    getPixCode()
-  }, [step])
 
   async function getCardToken() {
     try {
@@ -286,6 +286,30 @@ export const FormPayment = ({
     setCopyIconSuccess(
       <Icon icon="mingcute:check-2-fill" className="mr-2 text-green-500" />
     )
+  }
+  async function sendMessageWhatsApp() {
+    try {
+      const total_amount =
+        paymentMethod === 'pix' ? productValue.price_pix : productValue.price
+
+      await axios.post('/api/whatsapp/send', {
+        name: form.name,
+        phone_number: form.phone_number,
+        email: form.email,
+        address: `${form.complement} ${form.number}, ${form.address}, ${form.city} - ${form.state} | ${form.zip}`,
+        phone: form.phone_number,
+        document_number: form.cardholder_cpf,
+        shipping_time: productValue.shippingInfo.delivery_time,
+        shipping_amount: new Intl.NumberFormat('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }).format(productValue.shippingInfo.price),
+
+        shipping_company_name: productValue.shippingInfo.name,
+      })
+    } catch (erro) {
+      console.log(erro)
+    }
   }
 
   async function postTransaction() {
@@ -462,7 +486,7 @@ export const FormPayment = ({
           </div>
           <div className="md:col-span-2 col-span-5 ">
             <div className="flex flex-col text-white">
-              <label>CPF do titular</label>
+              <label>CPF do titular *</label>
               <input
                 type="text"
                 data-ip="card-holder-document"
@@ -474,10 +498,23 @@ export const FormPayment = ({
               />
             </div>
           </div>
+          <div className="md:col-span-3 col-span-3 text-white">
+            <label>Nome Complento do Titular *</label>
+            <input
+              name="name"
+              data-ip="name"
+              type="text"
+              className="input-text"
+              onChange={handleForm}
+              value={form.name}
+            />
+          </div>
           <div className="md:cols-span-2 col-span-5 flex justify-end">
             <button
               className="py-3 px-6 bg-brand-green-400 text-white font-semibold text-xl rounded-lg disabled:bg-brand-gray-50 disabled:cursor-not-allowed"
-              onClick={() => setStep((step) => step + 1)}
+              onClick={() => {
+                setStep((step) => step + 1)
+              }}
               disabled={
                 form.zip === '' ||
                 form.city === '' ||
@@ -486,7 +523,8 @@ export const FormPayment = ({
                 form.number === '' ||
                 form.complement === '' ||
                 form.email === '' ||
-                form.phone_number === ''
+                form.phone_number === '' ||
+                form.name === ''
               }
             >
               Avançar
@@ -508,22 +546,24 @@ export const FormPayment = ({
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr className="">
                 <td>
                   <input
+                    id="credit"
                     type="radio"
                     name="payment-method"
-                    onClick={() =>
-                      /* setPaymentMethod('credit') */ window.open(
-                        `https://pay.infinitepay.io/sanceleletronica/480/`,
-                        '_blank'
-                      )
-                    }
+                    onClick={() => {
+                      window.open(
+                        `https://pay.infinitepay.io/sanceleletronica/480/`
+                      ),
+                        setPaymentMethod('credit'),
+                        sendMessageWhatsApp()
+                    }}
                     className="h-4 w-4"
                     checked={paymentMethod === 'credit'}
                   />
                 </td>
-                <td className="flex justify-center">
+                <td className="flex justify-center h-full">
                   <img src="/img/cartao.png" alt="" className="w-[180px]" />
                 </td>
                 <td className="text-white font-light">Cartão de Crédito</td>
@@ -531,10 +571,12 @@ export const FormPayment = ({
               <tr>
                 <td>
                   <input
-                    id="credit"
+                    id="pix"
                     type="radio"
                     name="payment-method"
-                    onClick={() => setPaymentMethod('pix')}
+                    onClick={() => {
+                      setPaymentMethod('pix'), sendMessageWhatsApp()
+                    }}
                     className="h-4 w-4"
                     checked={paymentMethod === 'pix'}
                   />
