@@ -171,9 +171,7 @@ const ProductDetail = () => {
                         ? new Intl.NumberFormat('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
-                          }).format(
-                            Number(selectedShipping.price) + AMOUNT_CREDIT
-                          )
+                          }).format(AMOUNT_CREDIT)
                         : new Intl.NumberFormat('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
@@ -295,7 +293,7 @@ const ProductDetail = () => {
                   Selecione o frete para seguir com a Compra.
                 </small>
                 <small
-                  className={`text-green-500 transition-all duration-500 ${
+                  className={`text-green-500 md:text-sm text-base transition-all duration-500 ${
                     selectedShipping
                       ? 'opacity-100 translate-x-0'
                       : '-translate-x-4 opacity-0'
@@ -306,7 +304,7 @@ const ProductDetail = () => {
               </div>
             </div>
             <div className="flex flex-col">
-              <small className="text-white">
+              <small className="text-white md:text-sm text-base">
                 Consultar frete e prazo de entrega
               </small>
               <div>
@@ -314,14 +312,14 @@ const ProductDetail = () => {
                 <input
                   type="text"
                   placeholder="Insira o cep"
-                  className="px-4 mt-2 py-4 rounded-md max-w-[300px] text-lg bg-white/10 text-gray-300 font-normal"
+                  className="px-4 mt-2 py-5 rounded-md w-full md:max-w-[300px] text-lg bg-white/10 text-gray-300 font-normal"
                   onChange={(e) => setCep(e.target.value)}
                   value={cep}
                   maxLength={9}
                 />
                 <button
                   disabled={cep.length < 8}
-                  className="px-4 text-white disabled:opacity-40"
+                  className="px-4 border-green-600 border py-5 rounded-md w-full md:w-fit mt-4 md:mt-0 text-white disabled:opacity-40"
                   onClick={() => handleShippingCep()}
                 >
                   Calcular Frete
@@ -332,20 +330,25 @@ const ProductDetail = () => {
                 <div className="flex flex-col max-w-[400px] border-black p-2 mt-2 bg-gray-700 rounded-lg">
                   {shippingOptions.map((option, index: number) => {
                     return (
-                      <span key={index} className="flex items-center my-2">
+                      <span
+                        key={index}
+                        className=" items-center my-2 flex md:justify-start justify-between"
+                      >
                         <img
                           src={option.logo_company_url}
                           alt=""
-                          className="aspect-[10/3] object-contain ml-2 w-[100px] bg-white px-2"
+                          className="aspect-[10/3] object-contain ml-2 w-[100px] bg-white px-2 hidden md:block"
                         />
-                        <small className="text-white ml-2">{option.name}</small>
+                        <small className="text-white ml-2 md:text-sm text-base">
+                          {option.name}
+                        </small>
                         <small className="ml-2 font-bold text-base text-brand-green-700">
                           {new Intl.NumberFormat('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
                           }).format(option.price)}
                         </small>
-                        <small className="ml-4 font-normal text-white">
+                        <small className="ml-4 font-normal text-white md:text-sm text-base">
                           Até {option.delivery_time} dias úteis
                         </small>
                         <div className="flex">
@@ -353,7 +356,7 @@ const ProductDetail = () => {
                             type="radio"
                             name="frete"
                             id={index}
-                            className="ml-4 h-5 w-5 "
+                            className="ml-4 md:h-7 md:w-7 h-10 w-10 "
                             onClick={() => setSelectedShipping(option)}
                           />
                         </div>

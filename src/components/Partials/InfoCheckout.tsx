@@ -13,25 +13,19 @@ export const InfoCheckout = ({ productValue }: { productValue: any }) => {
           className="aspect-square rounded-md object-contain h-[110px] bg-white"
         />
         <div className="ml-3">
-          <p className="text-white/70 mb-2">
+          <p className="text-white/70 mb-2 md:text-base text-xl">
             <strong className="text-white">Marca:</strong> Criscell
           </p>
           <p className="text-white/70">
-            <strong className="text-white">Descricão:</strong> Aparelho medidor
-            de curto.
+            <strong className="text-white md:text-base text-xl">
+              Descricão:
+            </strong>{' '}
+            Aparelho medidor de curto.
           </p>
         </div>
       </div>
-      {/*     <p className="font-light text-white/70">
-        Valor do produto (Pix):{' '}
-        <span className="text-green-600 font-bold">
-          {new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-          }).format( 400)}
-        </span>
-      </p> */}
-      <p className="font-light text-white/70">
+
+      <p className="font-light text-white/70 md:text-base text-xl">
         Frete:{' '}
         <span className="font-bold text-white">
           {new Intl.NumberFormat('pt-BR', {
@@ -44,7 +38,7 @@ export const InfoCheckout = ({ productValue }: { productValue: any }) => {
           alt=""
           className="w-24 my-2 bg-white p-2 rounded-md"
         />
-        <p className=" text-white/70">
+        <p className=" text-white/70 md:text-base text-xl">
           Prazo de entrega:{' '}
           <strong>{productValue?.shippingInfo.delivery_time} dias</strong>
         </p>

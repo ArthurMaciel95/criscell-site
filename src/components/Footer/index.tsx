@@ -6,8 +6,8 @@ import { Icon } from '@iconify/react'
 export const Footer = () => {
   return (
     <footer className="gradient-footer pt-10">
-      <div className="main_container text-white flex gap-10 ">
-        <div>
+      <div className="main_container text-white flex gap-10 flex-wrap">
+        <div className="md:space-y-0 space-y-4">
           <h3 className="text-base uppercase font-bold mb-2">Navegação</h3>
           <Link href="/politica-de-privacidade">
             <p className="hover:underline cursor-pointer">
@@ -71,9 +71,9 @@ export const Footer = () => {
             />
           </div>
         </div>
-        <div>
-          <h3 className="text-base uppercase font-bold mb-2">CONTATO</h3>
-          <div className="">
+        <div className="">
+          <h3 className="text-base uppercase font-bold mb-4">CONTATO</h3>
+          <div className="md:space-y-0 space-y-4">
             <p className="flex items-center">
               <Icon
                 icon="solar:phone-linear"

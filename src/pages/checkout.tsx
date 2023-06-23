@@ -25,8 +25,8 @@ const Checkout = () => {
   }, [])
   return (
     <PageContent>
-      <section className="grid md:grid-cols-12 gap-5">
-        <div className="md:col-span-8 col-span-12 bg-black/50 rounded-md p-5 mt-32 md:mt-0">
+      <section className="md:grid md:grid-cols-12 gap-5 flex flex-col-reverse">
+        <div className="md:col-span-8 col-span-12 bg-black/50 rounded-md p-5  md:mt-0">
           <StepperCheckout step={step} />
           <span className="my-4 flex bg-gray-800 w-full h-[1px]"></span>
           <FormPayment
@@ -36,7 +36,7 @@ const Checkout = () => {
             productValue={productValue}
           />
         </div>
-        <div className="md:col-span-4 col-span-12 bg-black/50 rounded-md p-5 sticky top-28 h-fit w-full">
+        <div className="md:col-span-4 col-span-12 bg-black/50 rounded-md  mt-32 md:mt-0 p-5 md:sticky top-28 h-fit w-full">
           <InfoCheckout productValue={productValue} />
         </div>
       </section>

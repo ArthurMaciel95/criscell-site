@@ -4,7 +4,7 @@ export const StepperCheckout = ({ step = 1 }: { step: 1 | 2 | 3 }) => {
   return (
     <ol className="items-center w-full space-y-4 sm:flex sm:space-x-8 sm:space-y-0 flex">
       <li
-        className={`flex items-center ${
+        className={`flex items-center md:flex-row flex-col md:text-left text-center ${
           step === 1 ? 'text-blue-600 ' : 'text-gray-500 '
         } space-x-2.5`}
       >
@@ -33,9 +33,9 @@ export const StepperCheckout = ({ step = 1 }: { step: 1 | 2 | 3 }) => {
         </span>
       </li>
       <li
-        className={`flex items-center ${
+        className={`flex items-center h-full md:flex-row flex-col md:text-left text-center ${
           step === 2 ? 'text-blue-600 ' : 'text-gray-500 '
-        } space-x-2.5`}
+        } md:space-x-2.5`}
       >
         <span
           className={`flex items-center justify-center w-8 h-8 border ${
@@ -62,7 +62,7 @@ export const StepperCheckout = ({ step = 1 }: { step: 1 | 2 | 3 }) => {
         </span>
       </li>
       <li
-        className={`flex items-center ${
+        className={`flex items-center md:flex-row flex-col md:text-left text-center ${
           step === 3 ? 'text-blue-600 ' : 'text-gray-500 '
         } space-x-2.5`}
       >
