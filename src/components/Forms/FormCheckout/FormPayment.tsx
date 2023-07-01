@@ -174,6 +174,9 @@ export const FormPayment = ({
 
     try {
       /*  cleanCart() */
+      const tokenTransaction = window.localStorage.getItem(
+        'access_token_transation'
+      )
       const response: IPix = await axios.post(
         `/api/infinitepay/transacao/pix`,
         {
@@ -182,7 +185,9 @@ export const FormPayment = ({
         {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${accessTokenTransation}`,
+            Authorization: `Bearer ${
+              accessTokenTransation || tokenTransaction
+            }`,
           },
         }
       )
@@ -218,7 +223,11 @@ export const FormPayment = ({
           },
         }
       )
-
+      if (window)
+        window.localStorage.setItem(
+          'access_token_transation',
+          response.data.results.access_token
+        )
       setAccessTokenTransation(response.data.results.access_token)
     } catch (error: any) {
       toast.error(error.message)

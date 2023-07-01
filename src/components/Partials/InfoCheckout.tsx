@@ -2,7 +2,6 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 
 export const InfoCheckout = ({ productValue }: { productValue: any }) => {
-  console.log(productValue)
   return (
     <>
       <h4 className="text-white font-bold mb-2">RESUMO</h4>
