@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     const me = new MelhorEnvioSdk({
       client_id: process.env.CLIENT_ID,
       client_secret: process.env.CLIENT_SECRET,
-      sandbox: true,
+      sandbox: false,
       bearer: process.env.CLIENT_BEARER,
       redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URI,
       request_scope:
