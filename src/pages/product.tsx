@@ -246,11 +246,11 @@ const ProductDetail = () => {
               <div className="flex">
                 <Link href="/checkout">
                   <button
-                    disabled={
+                    /*  disabled={
                       !selectedShipping ||
                       loading ||
                       shippingOptions.length === 0
-                    }
+                    } */
                     onClick={() => saveInfoOnLocalStorage()}
                     className="disabled:from-gray-600 duration-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all disabled:to-brand-gray-50 bg-gradient-to-t px-5 py-4 flex text-white font-semibold rounded-lg from-brand-green-400  to-brand-green-700 items-center"
                   >
@@ -282,7 +282,7 @@ const ProductDetail = () => {
                 </div> */}
               </div>
 
-              <div className="flex flex-col">
+              {/* <div className="flex flex-col">
                 <small
                   className={`text-red-500 transition-all duration-500 ${
                     !selectedShipping
@@ -301,7 +301,7 @@ const ProductDetail = () => {
                 >
                   Tudo pronto para seguir com a compra!.
                 </small>
-              </div>
+              </div> */}
             </div>
             <div className="flex flex-col">
               <small className="text-white md:text-sm text-base">

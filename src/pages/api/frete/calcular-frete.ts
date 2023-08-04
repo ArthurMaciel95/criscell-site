@@ -16,21 +16,16 @@ export default async function handler(req, res) {
       sandbox: false,
       bearer: process.env.CLIENT_BEARER,
       redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URI,
-      request_scope:
-        'cart-read cart-write companies-read companies-write coupons-read coupons-write notifications-read orders-read products-read products-write purchases-read shipping-calculate shipping-cancel shipping-checkout shipping-companies shipping-generate shipping-preview shipping-print shipping-share shipping-tracking ecommerce-shipping transactions-read users-read users-write webhooks-read webhooks-write',
+
       state: 'BPMDruWTWzd',
     })
 
     const result = await me.shipment.calculate({
       from: {
         postal_code: cep_origem as string,
-        address: 'Rua Arco-íres',
-        number: '24',
       },
       to: {
         postal_code: cep_destino as string,
-        address: 'Rua Pomba Branca',
-        number: '18',
       },
       package: {
         weight: peso,
@@ -39,15 +34,21 @@ export default async function handler(req, res) {
         length: comprimento,
       },
       options: {
-        insurance_value: 300,
+        services: [1, 2, 3, 4],
+        custom_delivery_time: 1,
+        insurance_value: 0,
         receipt: false,
         own_hand: false,
         collect: false,
       },
     })
 
+    const filterShippingById = result.data.filter((item: any) => {
+      return item.id === 1 || item.id === 2 || item.id === 3 || item.id === 4
+    })
+
     if (result.status === 200) {
-      const serializedData = result.data.map((item: any) => {
+      const serializedData = filterShippingById.map((item: any) => {
         return {
           name: `${item.name}`,
           price: item.price,
