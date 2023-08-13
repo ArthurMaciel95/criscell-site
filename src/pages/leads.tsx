@@ -84,7 +84,7 @@ const Leads = () => {
                       <td className="p-2">{lead?.data?.email}</td>
                       <td className="p-2">{lead?.data?.phone_number}</td>
                       <td className="p-2">{lead?.data?.cardholder_cpf}</td>
-                      <td className="p-2">{`${lead?.data?.address} - ${lead?.data?.city}, ${lead?.data?.state}`}</td>
+                      <td className="p-2">{`${lead?.data?.address} - ${lead?.data?.city}, ${lead?.data?.state}, ${lead?.data?.zip}`}</td>
                       <td className="p-2">{lead?.data?.complement}</td>
                     </tr>
                   )
@@ -118,7 +118,7 @@ const Leads = () => {
                     <p className="p-2">CPF: {lead?.data?.cardholder_cpf}</p>
                     <p className="p-2">
                       Endereço:{' '}
-                      {`${lead?.data?.address} - ${lead?.data?.city}, ${lead?.data?.state}`}
+                      {`${lead?.data?.address} - ${lead?.data?.city}, ${lead?.data?.state}, ${lead?.data?.zip}`}
                     </p>
                     <p className="p-2">Complemento: {lead?.data?.complement}</p>
                   </div>
