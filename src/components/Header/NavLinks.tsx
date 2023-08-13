@@ -15,5 +15,9 @@ export const navLinks = [
     route: '/#video',
     name: 'Vídeo',
   },
+  {
+    route: '/login',
+    name: 'Login',
+  },
 ]
 

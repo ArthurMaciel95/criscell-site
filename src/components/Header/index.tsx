@@ -27,6 +27,9 @@ export const Header = () => {
             <li className="text-white font-light p-5 text-lg">
               <Link href="/#video">Vídeo</Link>
             </li>
+            <li className="text-white font-light p-5 text-lg">
+              <Link href="/login">Login</Link>
+            </li>
           </ul>{' '}
           <div className="md:hidden flex">
             <DropdownNavItem links={navLinks} />
