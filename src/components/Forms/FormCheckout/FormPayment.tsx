@@ -59,13 +59,7 @@ interface IForm {
   address: string
   email: string
   phone_number: string
-  cardholder_name: string
   cardholder_cpf: string
-  card_number: string
-  card_cvv: string
-  card_expiration_month: string
-  card_expiration_year: string
-  installments?: number
 }
 export const FormPayment = ({
   step,
@@ -95,13 +89,7 @@ export const FormPayment = ({
     address: '',
     email: '',
     phone_number: '',
-    cardholder_name: '',
     cardholder_cpf: '',
-    card_number: '',
-    card_cvv: '',
-    card_expiration_month: '',
-    card_expiration_year: '',
-    /*  installments: 1, */
   })
   const [copySuccess, setCopySuccess] = useState('Copiar Código')
   const [copyIconSuccess, setCopyIconSuccess] = useState(
@@ -234,31 +222,31 @@ export const FormPayment = ({
     }
   }
 
-  async function cardTokenization() {
-    try {
-      const response = await axios.post(
-        '/api/infinitepay/card-tokenization',
-        {
-          number: form.card_number,
-          expiration_month: form.card_expiration_month,
-          expiration_year: form.card_expiration_year,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessTokenIpay}`,
-          },
-        }
-      )
-      setPaymentToken(response.data.results.token)
-      if (response.error) {
-        toast.error(response.message)
-      }
-      console.log(response)
-    } catch (error: any) {
-      toast.error(error.message)
-      console.log(error)
-    }
-  }
+  // async function cardTokenization() {
+  //   try {
+  //     const response = await axios.post(
+  //       '/api/infinitepay/card-tokenization',
+  //       {
+  //         number: form.card_number,
+  //         expiration_month: form.card_expiration_month,
+  //         expiration_year: form.card_expiration_year,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${accessTokenIpay}`,
+  //         },
+  //       }
+  //     )
+  //     setPaymentToken(response.data.results.token)
+  //     if (response.error) {
+  //       toast.error(response.message)
+  //     }
+  //     console.log(response)
+  //   } catch (error: any) {
+  //     toast.error(error.message)
+  //     console.log(error)
+  //   }
+  // }
 
   function handleForm(e: any) {
     setForm({
@@ -269,13 +257,11 @@ export const FormPayment = ({
 
   async function generateForm() {
     setLoading(true)
-    await cardTokenization()
+    // await cardTokenization()
     var ipay = new IPay({ access_token: accessTokenIpay })
 
     ipay.listeners = {
-      'result:success': async function () {
-        await postTransaction()
-      },
+      'result:success': async function () {},
       'result:error': function (error: any) {
         setLoading(false)
         alert(
@@ -296,83 +282,20 @@ export const FormPayment = ({
       <Icon icon="mingcute:check-2-fill" className="mr-2 text-green-500" />
     )
   }
-  async function sendMessageWhatsApp() {
+
+  async function saveForm(data) {
     try {
-      const total_amount =
-        paymentMethod === 'pix' ? productValue.price_pix : productValue.price
-
-      await axios.post('/api/whatsapp/send', {
-        name: form.name,
-        phone_number: form.phone_number,
-        email: form.email,
-        address: `${form.complement} ${form.number}, ${form.address}, ${form.city} - ${form.state} | ${form.zip}`,
-        phone: form.phone_number,
-        document_number: form.cardholder_cpf,
-        shipping_time: productValue.shippingInfo.delivery_time,
-        shipping_amount: new Intl.NumberFormat('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-        }).format(productValue.shippingInfo.price),
-
-        shipping_company_name: productValue.shippingInfo.name,
+      console.log(data)
+      const results = await axios.post('/api/cliente/salvar', {
+        data,
       })
+
+      toast.success('Dados salvos com sucesso')
+      setStep((step) => step + 1)
     } catch (erro) {
+      toast.error('Ocorreu um erro ao salvar os dados')
       console.log(erro)
     }
-  }
-
-  async function postTransaction() {
-    const id = toast.loading('Processando pagamento...')
-    const payer_ip = await getIp()
-    const formPayment = document.forms[0]
-
-    const payload = {
-      amount: productValue.price,
-      payment_token: paymentToken,
-      cvv: form.card_cvv,
-      card_holder_name: form.cardholder_name,
-      document_number: form.cardholder_cpf,
-      email: form.email,
-      phone_number: form.phone_number,
-      address: form.address + ' ' + form.number,
-      complement: form.complement,
-      city: form.city,
-      state: form.state,
-      country: 'BR',
-      zip: form.zip,
-      payer_ip: payer_ip.ip,
-      card_token: formPayment.querySelector('input[name="ip[token]"]').value,
-      fingerprint: formPayment.querySelector('input[name="ip[session_id]"]')
-        .value,
-      /*  installments: form.installments, */
-    }
-    console.log(payload)
-
-    try {
-      const response = await axios.post(
-        `/api/infinitepay/transacao/credit`,
-        payload,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${accessTokenTransation}`,
-          },
-        }
-      )
-
-      toast.remove(id)
-      toast.success('Pagamento realizado com sucesso!')
-
-      router.push('/payment-success')
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
-      toast.remove(id)
-
-      toast.error(error.response.data.message)
-      console.log(error)
-    }
-    setLoading(false)
   }
 
   return (
@@ -522,7 +445,7 @@ export const FormPayment = ({
             <button
               className="py-3 px-6 bg-brand-green-400 text-white font-semibold text-xl rounded-lg disabled:bg-brand-gray-50 disabled:cursor-not-allowed"
               onClick={() => {
-                setStep((step) => step + 1)
+                saveForm(form)
               }}
               disabled={
                 form.zip === '' ||
@@ -565,8 +488,7 @@ export const FormPayment = ({
                       window.open(
                         `https://pay.infinitepay.io/sanceleletronica/480/`
                       ),
-                        setPaymentMethod('credit'),
-                        sendMessageWhatsApp()
+                        setPaymentMethod('credit')
                     }}
                     className="h-4 w-4"
                     checked={paymentMethod === 'credit'}
@@ -584,7 +506,7 @@ export const FormPayment = ({
                     type="radio"
                     name="payment-method"
                     onClick={() => {
-                      setPaymentMethod('pix'), sendMessageWhatsApp()
+                      setPaymentMethod('pix')
                     }}
                     className="h-4 w-4"
                     checked={paymentMethod === 'pix'}
@@ -699,157 +621,7 @@ export const FormPayment = ({
         </>
       )}
 
-      {step === 3 && paymentMethod === 'credit' && (
-        <>
-          <div className="flex flex-col items-start py-2 bg-brand-blue-500 p-4 rounded-md my-2">
-            <p className=" text-white">
-              Para realizar pagamento parcelado contatar no número:{' '}
-            </p>
-            <div className="flex text-white">
-              <a
-                href="https://api.whatsapp.com/send?phone=553597632886"
-                target="_blank"
-                rel="noreferrer"
-                className="flex"
-              >
-                <Icon
-                  icon="ic:twotone-whatsapp"
-                  color="white"
-                  className="mr-2 text-2xl"
-                />
-                <p>(35) 9763-2886</p>
-              </a>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
-            <input
-              type="text"
-              data-ip="method"
-              value="credit_card"
-              className="hidden"
-            />
-            <div className="md:col-span-3 col-span-5">
-              <div className="flex flex-col text-white">
-                <label>Nome completo do titular</label>
-                <input
-                  type="text"
-                  data-ip="card-holder-name"
-                  name="cardholder_name"
-                  className="input-text"
-                  placeholder=" "
-                  onChange={handleForm}
-                  value={form.cardholder_name}
-                />
-              </div>
-            </div>
-            <div className="md:col-span-2 col-span-5">
-              <div className="text-white flex flex-col">
-                <label>CVV</label>
-                <input
-                  type="text"
-                  data-ip="card-cvv"
-                  name="card_cvv"
-                  placeholder=" "
-                  className="mask-cvv text-black input-text"
-                  onChange={handleForm}
-                  value={form.card_cvv}
-                  maxLength={3}
-                />
-              </div>
-            </div>
-            <div className="md:col-span-3 col-span-5 flex flex-col text-white">
-              <label>Número do Cartão</label>
-              <input
-                type="text"
-                data-ip="card-number"
-                name="card_number"
-                placeholder=" "
-                className="mask-number-card input-text"
-                value={form.card_number}
-                onChange={handleForm}
-              />
-            </div>
-
-            <div className="md:col-span-2 col-span-3">
-              <div className="flex flex-col text-white">
-                <label>Mês de expiração</label>
-                <input
-                  type="text"
-                  data-ip="card-expiration-month"
-                  name="card_expiration_month"
-                  placeholder=" "
-                  className="mask-mes text-black input-text"
-                  onChange={handleForm}
-                  value={form.card_expiration_month}
-                  maxLength={2}
-                />
-              </div>
-            </div>
-            <div className="md:col-span-2 col-span-3">
-              <div className="text-white flex flex-col">
-                <label>Ano de expiração</label>
-                <input
-                  type="text"
-                  data-ip="card-expiration-year"
-                  name="card_expiration_year"
-                  placeholder=" "
-                  className="mask-ano input-text"
-                  maxLength={2}
-                  onChange={handleForm}
-                  value={form.card_expiration_year}
-                />
-              </div>
-            </div>
-            {/* <div className="md:col-span-2 col-span-3">
-            <div className="text-white flex flex-col">
-              <label htmlFor="parcelas">Parcelas</label>
-              <select
-                name="installments"
-                id="installments"
-                className="input-text py-2 px-4"
-                onChange={handleForm}
-                value={form.installments}
-              >
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
-                  <option
-                    key={item}
-                    className="text-base"
-                    value={item}
-                  >{`${item}x de ${new Intl.NumberFormat('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL',
-                  }).format(Number(productValue?.price / item))} `}</option>
-                ))}
-              </select>
-            </div>
-          </div> */}
-            <div className="md:cols-span-2 col-span-5 flex justify-between">
-              <button
-                className="py-3 px-6 bg-brand-gray-50/20 text-white font-semibold text-xl rounded-lg w-fit"
-                onClick={() => setStep((step) => step - 1)}
-              >
-                Voltar
-              </button>
-              <button
-                className="py-3 min-w-[228px] flex items-center justify-center px-6 bg-brand-green-400 text-white font-semibold text-xl rounded-lg w-fit"
-                type="submit"
-                id="submit"
-                disabled={isSubmitting}
-              >
-                {loading ? (
-                  <Icon
-                    icon="eos-icons:bubble-loading"
-                    color="white"
-                    fontSize={28}
-                  />
-                ) : (
-                  'Realizar pagamento'
-                )}
-              </button>
-            </div>
-          </div>
-        </>
-      )}
+      {step === 3 && paymentMethod === 'credit' && <></>}
     </form>
   )
 }
