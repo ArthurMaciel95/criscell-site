@@ -66,7 +66,7 @@ const ProductDetail = () => {
       const result: RequestShippingOption = await axios.post(
         '/api/frete/calcular-frete',
         {
-          cep_origem: '20241266',
+          cep_origem: '20241-266',
           cep_destino: cep,
           peso: 0.3,
           altura: 11,
