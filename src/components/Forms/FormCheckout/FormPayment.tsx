@@ -128,13 +128,14 @@ export const FormPayment = ({
   }, [paymentMethod, step])
 
   useEffect(() => {
-    if (cepDigited && step === 1) {
+    if (cepDigited !== '' && step === 1) {
       getCep(cepDigited)
     }
   }, [step, cepDigited])
 
   async function getCep(e: string) {
     try {
+      console.log(e)
       const { data: cep } = await axios.get(
         `https://viacep.com.br/ws/${e}/json/`
       )
