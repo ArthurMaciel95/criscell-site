@@ -34,7 +34,6 @@ export default async function handler(req, res) {
         length: comprimento,
       },
       options: {
-        services: [1, 2, 3, 4],
         custom_delivery_time: 1,
         insurance_value: 0,
         receipt: false,
@@ -43,12 +42,8 @@ export default async function handler(req, res) {
       },
     })
 
-    const filterShippingById = result.data.filter((item: any) => {
-      return item.id === 1 || item.id === 2 || item.id === 3 || item.id === 4
-    })
-
     if (result.status === 200) {
-      const serializedData = filterShippingById.map((item: any) => {
+      const serializedData = result.data.map((item: any) => {
         return {
           name: `${item.name}`,
           price: item.price,

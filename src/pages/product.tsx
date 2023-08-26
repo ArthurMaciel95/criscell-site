@@ -66,12 +66,12 @@ const ProductDetail = () => {
       const result: RequestShippingOption = await axios.post(
         '/api/frete/calcular-frete',
         {
-          cep_origem: '20241266',
+          cep_origem: '37701012',
           cep_destino: cep,
-          peso: 0.3,
-          altura: 11,
+          peso: 0.335,
+          altura: 15,
           largura: 15,
-          comprimento: 18,
+          comprimento: 17,
         }
       )
       setLoading(false)
@@ -178,6 +178,9 @@ const ProductDetail = () => {
                           }).format(AMOUNT_CREDIT)}{' '}
                       ( cartão de crédito 10x sem juros )
                     </h3>
+                    <small className="font-normal text-white/50">
+                      OBS: Variações de preços para o nordeste do brasil.
+                    </small>
                     <div className="mb-4 mt-2 p-3  rounded-md bg-brand-blue-500 w-fit flex flex-col pointer-events-none select-none">
                       <h2 className="font-bold text-white">
                         {selectedShipping
@@ -246,11 +249,11 @@ const ProductDetail = () => {
               <div className="flex">
                 <Link href="/checkout">
                   <button
-                    /*  disabled={
+                    disabled={
                       !selectedShipping ||
                       loading ||
                       shippingOptions.length === 0
-                    } */
+                    }
                     onClick={() => saveInfoOnLocalStorage()}
                     className="disabled:from-gray-600 duration-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all disabled:to-brand-gray-50 bg-gradient-to-t px-5 py-4 flex text-white font-semibold rounded-lg from-brand-green-400  to-brand-green-700 items-center"
                   >
@@ -282,7 +285,7 @@ const ProductDetail = () => {
                 </div> */}
               </div>
 
-              {/* <div className="flex flex-col">
+              <div className="flex flex-col">
                 <small
                   className={`text-red-500 transition-all duration-500 ${
                     !selectedShipping
@@ -301,7 +304,7 @@ const ProductDetail = () => {
                 >
                   Tudo pronto para seguir com a compra!.
                 </small>
-              </div> */}
+              </div>
             </div>
             <div className="flex flex-col">
               <small className="text-white md:text-sm text-base">
