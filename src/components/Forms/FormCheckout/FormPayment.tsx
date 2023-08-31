@@ -487,7 +487,9 @@ export const FormPayment = ({
                     name="payment-method"
                     onClick={() => {
                       window.open(
-                        `https://pay.infinitepay.io/sanceleletronica/480/`
+                        `https://pay.infinitepay.io/sanceleletronica/${
+                          400 + productValue?.shippingInfo.price
+                        }/`
                       ),
                         setPaymentMethod('credit')
                     }}

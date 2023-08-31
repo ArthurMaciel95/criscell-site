@@ -100,7 +100,7 @@ export const Footer = () => {
                 fontSize={20}
                 color="white"
               />
-              Avenida Marechal Castelo Branco, 356, Loja
+              Rua São Paulo n860. Centro. Poços de Caldas MG. Cep 37701-012
             </p>
           </div>
         </div>

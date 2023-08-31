@@ -29,7 +29,7 @@ const ProductDetail = () => {
       results: ShippingOption[]
     }
   }
-  const AMOUNT_CREDIT = 480
+  const AMOUNT_CREDIT = 400
   const AMOUNT_PIX = 400
 
   function randomRange(myMin: number, myMax: number) {
@@ -176,7 +176,7 @@ const ProductDetail = () => {
                             style: 'currency',
                             currency: 'BRL',
                           }).format(AMOUNT_CREDIT)}{' '}
-                      ( cartão de crédito 10x sem juros )
+                      cartão de crédito 10x sem juros (frete não incluso)
                     </h3>
                     <small className="font-normal text-white/50">
                       OBS: Variações de preços para o nordeste do brasil.
