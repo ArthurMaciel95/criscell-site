@@ -337,7 +337,7 @@ const ProductDetail = () => {
                         key={index}
                         className=" items-center my-2 flex md:justify-start justify-between flex-col md:flex-row"
                       >
-                        <div>
+                        <div className="flex items-center">
                           <img
                             src={option.logo_company_url}
                             alt=""
@@ -354,7 +354,7 @@ const ProductDetail = () => {
                             }).format(option.price)}
                           </small>
                         </div>
-                        <div>
+                        <div className="flex items-center">
                           <small className="ml-4 font-normal text-white md:text-sm text-base">
                             Até {option.delivery_time} dias úteis
                           </small>
