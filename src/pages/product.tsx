@@ -176,7 +176,7 @@ const ProductDetail = () => {
                             style: 'currency',
                             currency: 'BRL',
                           }).format(AMOUNT_CREDIT)}{' '}
-                      cartão de crédito 10x sem juros (frete não incluso)
+                      cartão de crédito 10x sem juros (470 + frete)
                     </h3>
                     <small className="font-normal text-white/50">
                       OBS: Variações de preços para o nordeste do brasil.
@@ -340,7 +340,7 @@ const ProductDetail = () => {
                         <img
                           src={option.logo_company_url}
                           alt=""
-                          className="aspect-[10/3] object-contain ml-2 w-[100px] bg-white px-2 hidden md:block"
+                          className="aspect-[10/3] object-contain ml-2 w-[100px] bg-white px-2  "
                         />
                         <small className="text-white ml-2 md:text-sm text-base">
                           {option.name}
