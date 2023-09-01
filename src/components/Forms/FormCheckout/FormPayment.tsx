@@ -488,7 +488,7 @@ export const FormPayment = ({
                     onClick={() => {
                       window.open(
                         `https://pay.infinitepay.io/sanceleletronica/${
-                          400 + productValue?.shippingInfo.price
+                          400 + Number(productValue?.shippingInfo.price)
                         }/`
                       ),
                         setPaymentMethod('credit')
