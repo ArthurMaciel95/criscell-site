@@ -167,7 +167,7 @@ const ProductDetail = () => {
                 <div className="mt-2">
                   <div className="">
                     <h3 className="font-normal text-white/50 text-base ">
-                      {selectedShipping
+                      {/*   {selectedShipping
                         ? new Intl.NumberFormat('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
@@ -175,8 +175,8 @@ const ProductDetail = () => {
                         : new Intl.NumberFormat('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
-                          }).format(AMOUNT_CREDIT)}{' '}
-                      cartão de crédito 10x sem juros (470 + frete)
+                          }).format(AMOUNT_CREDIT)}{' '} */}
+                      cartão de crédito 10x sem juros ( R$470,00 + frete)
                     </h3>
                     <small className="font-normal text-white/50">
                       OBS: Variações de preços para o nordeste do brasil.
@@ -335,33 +335,38 @@ const ProductDetail = () => {
                     return (
                       <span
                         key={index}
-                        className=" items-center my-2 flex md:justify-start justify-between"
+                        className=" items-center my-2 flex md:justify-start justify-between flex-col md:flex-row"
                       >
-                        <img
-                          src={option.logo_company_url}
-                          alt=""
-                          className="aspect-[10/3] object-contain ml-2 w-[100px] bg-white px-2  "
-                        />
-                        <small className="text-white ml-2 md:text-sm text-base">
-                          {option.name}
-                        </small>
-                        <small className="ml-2 font-bold text-base text-brand-green-700">
-                          {new Intl.NumberFormat('pt-BR', {
-                            style: 'currency',
-                            currency: 'BRL',
-                          }).format(option.price)}
-                        </small>
-                        <small className="ml-4 font-normal text-white md:text-sm text-base">
-                          Até {option.delivery_time} dias úteis
-                        </small>
-                        <div className="flex">
-                          <input
-                            type="radio"
-                            name="frete"
-                            id={index}
-                            className="ml-4 md:h-7 md:w-7 h-10 w-10 "
-                            onClick={() => setSelectedShipping(option)}
+                        <div>
+                          <img
+                            src={option.logo_company_url}
+                            alt=""
+                            className="aspect-[10/3] object-contain ml-2 w-[100px] bg-white px-2  "
                           />
+                          <small className="text-white ml-2 md:text-sm text-base">
+                            {option.name}
+                          </small>
+
+                          <small className="ml-2 font-bold text-base text-brand-green-700">
+                            {new Intl.NumberFormat('pt-BR', {
+                              style: 'currency',
+                              currency: 'BRL',
+                            }).format(option.price)}
+                          </small>
+                        </div>
+                        <div>
+                          <small className="ml-4 font-normal text-white md:text-sm text-base">
+                            Até {option.delivery_time} dias úteis
+                          </small>
+                          <div className="flex">
+                            <input
+                              type="radio"
+                              name="frete"
+                              id={index}
+                              className="ml-4 md:h-7 md:w-7 h-10 w-10 "
+                              onClick={() => setSelectedShipping(option)}
+                            />
+                          </div>
                         </div>
                       </span>
                     )
